@@ -3,8 +3,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:provider/provider.dart';
+import 'package:singlegrocery/common%20class/color.dart';
 import 'package:singlegrocery/model/home/homescreenmodel.dart';
 import 'package:singlegrocery/pages/Home/categoriesinfo.dart';
+import 'package:singlegrocery/theme/ThemeModel.dart';
 import 'package:singlegrocery/translation/locale_keys.g.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,73 +22,76 @@ class Categoriespage extends StatefulWidget {
 class _CategoriespageState extends State<Categoriespage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios_outlined,
-                  size: 20,
-                )),
-            title: Text(
-              LocaleKeys.Categories.tr(),
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 11.sp),
-            ),
-            centerTitle: true,
-          ),
-          body: GridView.builder(
-              itemCount: widget.categoriesdata!.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.87,
-                // mainAxisSpacing: 10,
+    return Consumer(builder: (context, ThemeModel themenofier, child) {
+      return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_outlined,
+                    size: 20,
+                  )),
+              title: Text(
+                LocaleKeys.Categories.tr(),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp,color: themenofier.isdark
+                    ? Colors.white : color.primarycolor),
               ),
-              itemBuilder: (BuildContext, index) {
-                return SizedBox(
-                  height: 14.h,
-                  child: Column(
-                    children: [
-                      Container(
-                          height: 13.h,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              Get.to(() => categories_items(
-                                    widget.categoriesdata![index].id.toString(),
-                                    widget.categoriesdata![index].categoryName,
-                                  ));
-                            },
-                            child: ClipOval(
-                              // borderRadius: BorderRadius.circular(50),
-                              child: Image.network(
-                                widget.categoriesdata![index].image.toString(),
-                                fit: BoxFit.fill,
-                              ),
+              centerTitle: true,
+            ),
+            body: GridView.builder(
+                itemCount: widget.categoriesdata!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.87,
+                  // mainAxisSpacing: 10,
+                ),
+                itemBuilder: (BuildContext, index) {
+                  return SizedBox(
+                    height: 14.h,
+                    child: Column(
+                      children: [
+                        Container(
+                            height: 11.h,
+                            decoration:  BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
                             ),
-                          )),
-                      SizedBox(
-                        height: 0.8.h,
-                      ),
-                      Expanded(
-                        child: Text(
-                          widget.categoriesdata![index].categoryName.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              TextStyle(fontFamily: 'Poppins', fontSize: 11.sp),
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(() => categories_items(
+                                  widget.categoriesdata![index].id.toString(),
+                                  widget.categoriesdata![index].categoryName,
+                                ));
+                              },
+                              child: ClipOval(
+                                // borderRadius: BorderRadius.circular(50),
+                                child: Image.network(
+                                  widget.categoriesdata![index].image.toString(),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            )),
+                        SizedBox(
+                          height: 0.8.h,
                         ),
-                      )
-                    ],
-                  ),
-                );
-              })),
-    );
+                        Expanded(
+                          child: Text(
+                            widget.categoriesdata![index].categoryName.toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                            TextStyle(fontFamily: 'Poppins', fontSize: 11.sp),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                })),
+      );
+    },);
   }
 }

@@ -405,7 +405,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                       ],
                                       Positioned(
                                           top: 5.0,
-                                          right: 5.0,
+                                          right: -13.0,
                                           child: InkWell(
                                             onTap: () {
                                               if (userid == "") {
@@ -447,22 +447,22 @@ class _TrendingfoodState extends State<Trendingfood> {
                                                         .size
                                                         .height /
                                                         80),
-                                                decoration: BoxDecoration(
-                                                  // shape: BoxShape.values,
-                                                  borderRadius:
-                                                  BorderRadius.circular(12),
-                                                  color: Colors.black26,
-                                                ),
+                                                // decoration: BoxDecoration(
+                                                //   // shape: BoxShape.values,
+                                                //   borderRadius:
+                                                //   BorderRadius.circular(12),
+                                                //   color: Colors.black26,
+                                                // ),
                                                 child: itemdata!.data![index]
                                                     .isFavorite ==
                                                     "0"
                                                     ? SvgPicture.asset(
                                                   'Icons/Favorite.svg',
-                                                  color: Colors.white,
+                                                  color: themenotifier.isdark  ? Colors.white : color.primarycolor,
                                                 )
                                                     : SvgPicture.asset(
                                                   'Icons/Favoritedark.svg',
-                                                  color: Colors.white,
+                                                  color: themenotifier.isdark  ? Colors.white : color.primarycolor,
                                                 )),
                                           )),
                                     ],
@@ -569,6 +569,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                       ],
                                     ),
                                   ),
+
                                   if (itemdata!
                                       .data![
                                   index]
