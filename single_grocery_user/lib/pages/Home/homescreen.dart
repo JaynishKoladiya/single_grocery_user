@@ -2317,7 +2317,7 @@ class _HomescreenState extends State<Homescreen> {
                                                             fontSize: 10.sp,
                                                             color: themenofier.isdark
                                                                 ? Colors.white
-                                                                : color.primarycolor,
+                                                                : color.black,
                                                             fontFamily:
                                                                 'Poppins_semibold',
                                                           ),
