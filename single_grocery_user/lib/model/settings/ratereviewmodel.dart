@@ -27,6 +27,11 @@ class Ratereviewmodel {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Ratereviewmodel{status: $status, message: $message, data: $data}';
+  }
 }
 
 class Data {
@@ -55,6 +60,11 @@ class Data {
     userId = json['user_id'];
     name = json['name'];
     profileImage = json['profile_image'];
+  }
+
+  @override
+  String toString() {
+    return 'Data{id: $id, ratting: $ratting, comment: $comment, date: $date, userId: $userId, name: $name, profileImage: $profileImage}';
   }
 
   Map<String, dynamic> toJson() {

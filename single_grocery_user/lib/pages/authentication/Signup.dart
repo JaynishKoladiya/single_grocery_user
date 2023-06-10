@@ -160,7 +160,7 @@ class _SignupState extends State<Signup> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.purple;
+        return color.primarycolor;
       }
       return Colors.black;
     }

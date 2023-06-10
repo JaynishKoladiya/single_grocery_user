@@ -329,7 +329,7 @@ abstract class LocaleKeys {
   static const Devbygravityinfo = 'Devbygravityinfo';
   static const Zero = 'Zero';
   static const Payment = 'Payment';
-  static const Contectus = 'Contectus';
+  static const Contectus = 'Contact us';
   static const No91_70164 = 'No91_70164';
   static const Company_address = 'Company_address';
   static const Ordersummary = 'Ordersummary';

@@ -13,6 +13,7 @@ import 'package:singlegrocery/pages/authentication/Otp.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:singlegrocery/model/authentication/loginmodel.dart';
 import 'package:singlegrocery/model/authentication/signupmodel.dart';
+import 'package:singlegrocery/theme/ThemeModel.dart';
 import 'package:singlegrocery/widgets/loader.dart';
 import 'package:singlegrocery/common%20class/color.dart';
 import 'package:singlegrocery/common%20class/prefs_name.dart';

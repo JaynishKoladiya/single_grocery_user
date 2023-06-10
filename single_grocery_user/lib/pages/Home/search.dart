@@ -150,10 +150,10 @@ class _SearchState extends State<Search> {
                               color: Colors.grey,
                               fontSize: 15,
                               fontFamily: "Poppins"),
-                          enabledBorder: const OutlineInputBorder(
+                          enabledBorder:  OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
-                          focusedBorder: const OutlineInputBorder(
+                          focusedBorder:  OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           )),
                     ),

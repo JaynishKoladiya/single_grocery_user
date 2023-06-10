@@ -229,8 +229,9 @@ class _HomepageState extends State<Homepage> {
             barrierDismissible: false,
             builder: (context) {
               return AlertDialog(
-                title: Text("Alert",style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp,color: color.primarycolor)),
-                content: Text("Are you sure to exit?",style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp)),
+                title: Text("Alert",style: TextStyle(fontFamily: 'Poppins_semibold',fontWeight: FontWeight.bold ,fontSize: 15.sp,color: themenofier.isdark
+                    ? Colors.white : color.primarycolor)),
+                content: Text("Do you Want to exit?",style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp)),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -245,7 +246,10 @@ class _HomepageState extends State<Homepage> {
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
-                    child: Text(LocaleKeys.Yes.tr(),style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp,color: color.primarycolor)),
+                    child: Text(LocaleKeys.Yes.tr(),style: TextStyle(fontFamily: 'Poppins_semibold', fontSize: 15.sp,
+                        color: themenofier.isdark
+                            ? Colors.white
+                            : color.primarycolor)),
                   ),
                 ],
               );
