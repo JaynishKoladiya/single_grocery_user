@@ -15,6 +15,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../common class/allformater.dart';
 import '../common class/prefs_name.dart';
 import '../config/API/API.dart';
+import '../model/cart/ordersummaryModel.dart';
 import '../model/favorite/addtocartmodel.dart';
 import '../theme/ThemeModel.dart';
 import '../translation/locale_keys.g.dart';
@@ -142,7 +143,12 @@ class _Subscription_pageState extends State<Subscription_page> {
       rethrow;
     }
   }
+
+
   add_to_cartAPI() async {
+
+
+    print("quantity ${widget.item!.itemQty!}");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     double addonstotalprice = 0;
     for (int i = 0; i < arr_addonsprice.length; i++) {
@@ -188,7 +194,8 @@ class _Subscription_pageState extends State<Subscription_page> {
         "addons_total_price": numberFormat.format(addonstotalprice),
         "quantity":widget.item!.itemQty!
       };
-      print("====>${map}");
+
+       print("map:::====>${map}");
       var response = await Dio().post(DefaultApi.appUrl + PostAPI.Addtocart, data: map);
       var finaldata = addtocartmodel.fromJson(response.data);
       print("====>${response.data}");
@@ -632,12 +639,13 @@ class _Subscription_pageState extends State<Subscription_page> {
                                               ),);
                                       }
                                       if (e.subsType == "One Time") {
+
                                         _datePickerController =
                                             DateRangePickerController();
                                         showDialog(context: context,
                                           builder: (context) =>
                                               Dialog(
-                                                child: Container(
+                                                child: Container(color: Colors.white,
                                                     height: 50.h,
                                                     child: SfDateRangePicker(
                                                       initialSelectedDate: DateTime
@@ -704,13 +712,100 @@ class _Subscription_pageState extends State<Subscription_page> {
                                         //     select.price.value,widget.itemQty),));
                                       }
                                       if (e.subsType == "Alternate") {
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 4.w, top: 4.h, bottom: 2.h),
+                                          height: 3.6.h,
+                                          width: 32.w,
+                                          decoration:
+                                          BoxDecoration(
+                                            border: Border.all(
+                                                color:
+                                                color.primarycolor),
+                                            borderRadius:
+                                            BorderRadius
+                                                .circular(5),
+                                            // color: Theme.of(context).accentColor
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceAround,
+                                            children: [
+                                              GestureDetector(
+                                                  onTap: () {
+                                                    if (widget.item!.itemQty <= int.parse(
+                                                        widget.item!.itemQty.toString())-1) {
+                                                      loader
+                                                          .showErroDialog(
+                                                        description:
+                                                        LocaleKeys
+                                                            .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
+                                                        ,
+                                                      );
+                                                    }
+                                                    else {
+                                                      setState(
+                                                              () {
+                                                            widget.item!
+                                                                .itemQty = int.parse(
+                                                                widget.item!.itemQty
+                                                                    .toString()) -
+                                                                1;
+                                                          });
+                                                    }
+                                                  },
+                                                  child: Icon(
+                                                    Icons.remove,
+                                                    color: color
+                                                        .primarycolor,
+                                                    size: 16,
+                                                  )),
+                                              Container(
+                                                decoration:
+                                                BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(
+                                                      3),
+                                                ),
+                                                child: Text(
+                                                  widget.item!
+                                                      .itemQty!
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                    10.sp, color: themenofier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor,),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                  onTap:
+                                                      () async {
+                                                    setState(
+                                                            () {
+                                                          widget.item!.itemQty = int.parse(
+                                                              widget.item!.itemQty.toString()) +
+                                                              1;
+                                                        });
+                                                  },
+                                                  child: Icon(
+                                                    Icons.add,
+                                                    color: color
+                                                        .primarycolor,
+                                                    size: 16,
+                                                  )),
+                                            ],
+                                          ),
+                                        );
                                         _datePickerController =
                                             DateRangePickerController();
                                         t = 0;
                                         showDialog(context: context,
                                           builder: (context) =>
                                               Dialog(
-                                                child: Container(
+                                                child: Container(color: Colors.white,
                                                     height: 50.h,
                                                     child: SfDateRangePicker(
                                                       confirmText: "Done",
@@ -1105,7 +1200,18 @@ class _Subscription_pageState extends State<Subscription_page> {
                         //     ),
                         //   ],
 
-                        Container(
+                        // Padding(
+                        //   padding: EdgeInsets.only(left: 4.w, right: 4.w),
+                        //
+                        //     child:Row(
+                        //       children: select.listdata.value.map((e) {}).toList()
+                        //     ),
+                        // ),
+
+
+                        // Add qun
+                        if(select.sub_str.value == "One Time")...[
+                          Container(
                           margin: EdgeInsets.only(
                               left: 4.w, top: 4.h, bottom: 2.h),
                           height: 3.6.h,
@@ -1113,8 +1219,9 @@ class _Subscription_pageState extends State<Subscription_page> {
                           decoration:
                           BoxDecoration(
                             border: Border.all(
-                                color:
-                                color.primarycolor),
+                              color: themenofier.isdark
+                                  ? Colors.white
+                                  : color.primarycolor,),
                             borderRadius:
                             BorderRadius
                                 .circular(5),
@@ -1150,8 +1257,9 @@ class _Subscription_pageState extends State<Subscription_page> {
                                   },
                                   child: Icon(
                                     Icons.remove,
-                                    color: color
-                                        .primarycolor,
+                                    color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,
                                     size: 16,
                                   )),
                               Container(
@@ -1163,12 +1271,10 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       3),
                                 ),
                                 child: Text(
-                                  widget.item!
-                                      .itemQty!
-                                      .toString(),
+                                  widget.item!.itemQty!.toString(),
                                   style: TextStyle(
-                                      fontSize:
-                                      10.sp, color: themenofier.isdark
+                                    fontSize:
+                                    10.sp, color: themenofier.isdark
                                       ? Colors.white
                                       : color.primarycolor,),
                                 ),
@@ -1185,13 +1291,198 @@ class _Subscription_pageState extends State<Subscription_page> {
                                   },
                                   child: Icon(
                                     Icons.add,
-                                    color: color
-                                        .primarycolor,
+                                    color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,
                                     size: 16,
                                   )),
                             ],
                           ),
                         ),
+                        ],
+                        if(select.sub_str.value == "Daily")...[
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 4.w, top: 4.h, bottom: 2.h),
+                            height: 3.6.h,
+                            width: 32.w,
+                            decoration:
+                            BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                  color.primarycolor),
+                              borderRadius:
+                              BorderRadius
+                                  .circular(5),
+                              // color: Theme.of(context).accentColor
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceAround,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      if (widget.item!.itemQty <= int.parse(
+                                          widget.item!.itemQty.toString())-1) {
+                                        loader
+                                            .showErroDialog(
+                                          description:
+                                          LocaleKeys
+                                              .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
+                                          ,
+                                        );
+                                      }
+                                      else {
+                                        setState(
+                                                () {
+                                              widget.item!
+                                                  .itemQty = int.parse(
+                                                  widget.item!.itemQty
+                                                      .toString()) -
+                                                  1;
+                                            });
+                                      }
+                                    },
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: color
+                                          .primarycolor,
+                                      size: 16,
+                                    )),
+                                Container(
+                                  decoration:
+                                  BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius
+                                        .circular(
+                                        3),
+                                  ),
+                                  child: Text(
+                                    widget.item!
+                                        .itemQty!
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize:
+                                      10.sp, color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,),
+                                  ),
+                                ),
+                                InkWell(
+                                    onTap:
+                                        () async {
+                                      setState(
+                                              () {
+                                            widget.item!.itemQty = int.parse(
+                                                widget.item!.itemQty.toString()) +
+                                                1;
+                                          });
+                                    },
+                                    child: Icon(
+                                      Icons.add,
+                                      color: color
+                                          .primarycolor,
+                                      size: 16,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ],
+                        if(select.sub_str.value == "Alternate")...[
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 4.w, top: 4.h, bottom: 2.h),
+                            height: 3.6.h,
+                            width: 32.w,
+                            decoration:
+                            BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                  color.primarycolor),
+                              borderRadius:
+                              BorderRadius
+                                  .circular(5),
+                              // color: Theme.of(context).accentColor
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceAround,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      if (widget.item!.itemQty <= int.parse(
+                                          widget.item!.itemQty.toString())-1) {
+                                        loader
+                                            .showErroDialog(
+                                          description:
+                                          LocaleKeys
+                                              .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
+                                          ,
+                                        );
+                                      }
+                                      else {
+                                        setState(
+                                                () {
+                                              widget.item!
+                                                  .itemQty = int.parse(
+                                                  widget.item!.itemQty
+                                                      .toString()) -
+                                                  1;
+                                            });
+                                      }
+                                    },
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: color
+                                          .primarycolor,
+                                      size: 16,
+                                    )),
+                                Container(
+                                  decoration:
+                                  BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius
+                                        .circular(
+                                        3),
+                                  ),
+                                  child: Text(
+                                    widget.item!
+                                        .itemQty!
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize:
+                                      10.sp, color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,),
+                                  ),
+                                ),
+                                InkWell(
+                                    onTap:
+                                        () async {
+                                      setState(
+                                              () {
+                                            widget.item!.itemQty = int.parse(
+                                                widget.item!.itemQty.toString()) +
+                                                1;
+                                          });
+                                    },
+                                    child: Icon(
+                                      Icons.add,
+                                      color: color
+                                          .primarycolor,
+                                      size: 16,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ],
+
+
+
+
+                        // Start Date
                         if(select.sub_str.value == "One Time")...[
                           Container(
                             margin: EdgeInsets.only(left: 4.w,
@@ -1562,14 +1853,16 @@ class _Subscription_pageState extends State<Subscription_page> {
                                 .toString())));
                       }
                     }
-
+                    // add_cart_qty();
                     add_to_cartAPI();
                   },
                   child: Container(
                     margin: EdgeInsets.all(3.w),
                     padding: EdgeInsets.all(3.w),
                     decoration: BoxDecoration(
-                      color: color.primarycolor,
+                        color: themenofier.isdark
+                            ? Colors.white
+                            : color.primarycolor,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: themenofier.isdark
@@ -1585,8 +1878,8 @@ class _Subscription_pageState extends State<Subscription_page> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: 'Poppins_medium',color: themenofier.isdark
-                          ? Colors.white
-                          : color.primarycolor,
+                          ? Colors.black
+                          : color.white,
 
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold

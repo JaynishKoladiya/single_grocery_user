@@ -56,7 +56,7 @@ class _ViewcartState extends State<Viewcart> {
       var response =
           await Dio().post(DefaultApi.appUrl + PostAPI.Summary, data: map);
       var finalist = await response.data;
-      log("===>${finalist}");
+      log("finalist:::===>${finalist}");
       cartdata = order_summary_model.fromJson(finalist);
       count.cartcountnumber(cartdata!.data!.length);
       return cartdata!.data;
@@ -464,7 +464,8 @@ class _ViewcartState extends State<Viewcart> {
                                                 child: Text(
                                                   cartdata!.data![index].qty
                                                       .toString(),
-                                                  style: TextStyle(
+
+                                                  style: TextStyle(color: Colors.white,
                                                       fontSize: 10.sp),
                                                 ),
                                               ),

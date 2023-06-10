@@ -8,6 +8,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 import 'package:singlegrocery/pages/authentication/Otp.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:singlegrocery/model/authentication/loginmodel.dart';
@@ -20,6 +21,7 @@ import 'package:singlegrocery/utils/validator.dart/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import '../../config/api/API.dart';
+import '../../theme/ThemeModel.dart';
 import '../Home/homepage.dart';
 import 'Forgotpassword.dart';
 import 'Signup.dart';
@@ -226,395 +228,438 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: WillPopScope(
-        onWillPop: () async {
-          final value = await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  "Alert",
-                  style: TextStyle(),
-                ),
-                content: Text(
-                  "are you sure to exit",
-                  style: TextStyle(),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
+    return Consumer(
+        builder: (context, ThemeModel themenofier, child) {
+          return SafeArea(
+            child: SafeArea(
+              child: WillPopScope(
+                onWillPop: () async {
+                  final value = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Alert",
+                          style: TextStyle(),
+                        ),
+                        content: Text(
+                          "are you sure to exit",
+                          style: TextStyle(),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Text(LocaleKeys.No.tr()),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(true);
+                            },
+                            child: Text(LocaleKeys.Yes.tr()),
+                          ),
+                        ],
+                      );
                     },
-                    child: Text(LocaleKeys.No.tr()),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    child: Text(LocaleKeys.Yes.tr()),
-                  ),
-                ],
-              );
-            },
-          );
-          if (value != null) {
-            return Future.value(value);
-          } else {
-            return Future.value(false);
-          }
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: color.primarycolor,
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topRight,
-                      // decoration: BoxDecoration(color: color.primarycolor),
-                        height: 4.h,
-                        margin: EdgeInsets.all(5.w),
-                        width: MediaQuery.of(context).size.width,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Homepage(0)),
-                            );
-                          },
-                          child: Text(
-                            LocaleKeys.Skip_continue.tr(),
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: color.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13.sp),
-                          ),
-                        )),
-                    Image.asset("Icons/logo-white.png",height: 20.h,width: 50.w,),
-                    Card(
-                      margin: EdgeInsets.all(5.w),
-                      color: color.white,
-                      elevation: 3,
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.topLeft,
-                            margin:
-                            EdgeInsets.only(left: 4.5.w, top: 3.5.h, bottom: 1.h),
-                            child: Text(
-                              LocaleKeys.Login.tr(),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 23.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Poppins_Bold',color: color.primarycolor),
-                            ),
-                          ),
-                          // Container(
-                          //   alignment: Alignment.topLeft,
-                          //   margin:
-                          //   EdgeInsets.only(left: 4.5.w, top: 3.5.h, bottom: 1.h),
-                          //   child: Text(
-                          //     LocaleKeys.Loginst.tr(),
-                          //     overflow: TextOverflow.ellipsis,
-                          //     maxLines: 1,
-                          //     style: TextStyle(
-                          //         fontSize: 12.sp,
-                          //         fontFamily: 'Poppins_Bold'),
-                          //   ),
-                          // ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.only(
-                              left: 4.5.w,
-                            ),
-                            child: Text(
-                              LocaleKeys.Loginst.tr(),
-                              // LocaleKeys.Signin_to_your_account,
-                              style: TextStyle(fontSize: 12.sp, fontFamily: 'Poppins'),
-                            ),
-                          ),
-                          if (Logintype == "mobile") ...[
+                  );
+                  if (value != null) {
+                    return Future.value(value);
+                  } else {
+                    return Future.value(false);
+                  }
+                },
+                child: Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  body: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    //color: themenofier.isdark ? Colors.black : color.primarycolor,
+                    color: themenofier.isdark ? Colors.black : color.primarycolor,
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          children: [
                             Container(
-                              margin: EdgeInsets.only(
-                                top: 2.5.h,
-                                bottom: 2.5.h,
-                                left: 4.w,
-                                right: 4.w,
-                              ),
-                              child: Center(
-                                child: IntlPhoneField(
-                                  cursorColor: color.primarycolor,
-                                  disableLengthCheck: true,
-                                  controller: mobile,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: LocaleKeys.Phoneno.tr(),
-                                    border: const OutlineInputBorder(),
-                                    enabledBorder:  OutlineInputBorder(
-                                      borderSide: BorderSide(color: color.primarycolor),
-                                    ),
-                                    focusedBorder:  OutlineInputBorder(
-                                      borderSide: BorderSide(color: color.primarycolor),
-                                    ),
-                                  ),
-                                  initialCountryCode: 'IN',
-                                  onCountryChanged: (value) {
-                                    countrycode = value.dialCode;
-                                  },
-                                ),
-                              ),
-                            ),
-                          ] else ...[
-                            Container(
-                              margin:
-                              EdgeInsets.only(top: 2.5.h, left: 4.w, right: 4.w),
-                              child: Center(
-                                child: TextFormField(
-                                  validator: (value) => Logintype == "email"
-                                      ? Validators.validateEmail(value!)
-                                      : null,
-                                  cursorColor: color.primarycolor,
-                                  controller: email,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                      hintText: LocaleKeys.Email.tr(),
-                                      border: const OutlineInputBorder(),
-                                      enabledBorder:  OutlineInputBorder(
-                                        borderSide: BorderSide(color: color.primarycolor),
-                                      ),
-                                      focusedBorder:  OutlineInputBorder(
-                                        borderSide: BorderSide(color:color.primarycolor),
-                                      )),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin:
-                              EdgeInsets.only(top: 2.5.h, left: 4.w, right: 4.w),
-                              child: Center(
-                                child: TextFormField(
-                                  validator: (value) =>
-                                      Validators.validatePassword(value!),
-                                  cursorColor: color.primarycolor,
-                                  controller: password,
-                                  obscureText: _obscureText,
-                                  textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _obscureText = !_obscureText;
-                                            });
-                                          },
-                                          icon: Icon(
-                                            _obscureText
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                            color: Colors.grey,
-                                          )),
-                                      hintText: LocaleKeys.Password.tr(),
-                                      border: const OutlineInputBorder(),
-                                      enabledBorder:  OutlineInputBorder(
-                                        borderSide: BorderSide(color:color.primarycolor),
-                                      ),
-                                      focusedBorder:  OutlineInputBorder(
-                                        borderSide: BorderSide(color: color.primarycolor),
-                                      )),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topRight,
-                              margin: EdgeInsets.only(right: 4.w, top: 1.5.h),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Forgotpass()),
-                                  );
-                                },
-                                child: Text(
-                                  LocaleKeys.Forgot_Password.tr(),
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins_semiBold',
-                                      fontSize: 10.5.sp,color: color.primarycolor),
-                                ),
-                              ),
-                            ),
-                          ],
-                          Container(
-                            margin: EdgeInsets.only(
-                              top: 2.h,
-                              right: 4.w,
-                              left: 4.w,
-                            ),
-                            height: 6.5.h,
-                            width: double.infinity,
-                            child: TextButton(
-                              onPressed: () async {
-                                // if (mobile.value.text.isEmpty) {
-                                //   loader.showErroDialog(description: "enter");
-                                // }
-
-                                if (_formkey.currentState!.validate()) {
-                                  if (Logintype == "mobile") {
-                                    if (mobile.value.text.isEmpty) {
-                                      loader.showErroDialog(
-                                          description:
-                                          LocaleKeys.Please_enter_all_details.tr());
-                                    } else {
-                                      login();
-                                    }
-                                  } else {
-                                    login();
-                                  }
-                                }
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: color.primarycolor,
-                              ),
-                              child: Text(
-                                LocaleKeys.Login.tr(),
-                                style: TextStyle(
-                                    fontFamily: 'Poppins_Bold',
-                                    color: Colors.white,
-                                    fontSize: 13.sp),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 2.5.h),
-                            child: Text(LocaleKeys.OR.tr(),
-                                style: TextStyle(
-                                  fontFamily: 'Poppins_semiBold',
-                                  fontSize: 11.sp,
-                                )),
-                          ),
-                          Padding(
-                              padding: EdgeInsets.only(
-                                top: 1.h,
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black26,
-                                    ),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Card(
-                                  elevation: 0,
-                                  child: InkWell(
-                                      borderRadius: BorderRadius.zero,
-                                      onTap: () async {
-                                        googlelogin();
-                                      },
-                                      child: Image.asset(
-                                        'Icons/google.png',
-                                        height: 5.h,
-                                        width: 11.w,
-                                      )),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4.w,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black26,
-                                    ),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Card(
-                                  elevation: 0,
-                                  child: InkWell(
-                                      onTap: () async {
-                                        _FBlogin();
-                                      },
-                                      child: Image.asset(
-                                        'Icons/facebook.png',
-                                        height: 5.h,
-                                        width: 11.w,
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  alignment: Alignment.topCenter,
-                                  margin: EdgeInsets.only(top: 2.h,bottom: 2.h),
-                                  child: Text(
-                                    '${LocaleKeys.Dont_have_an_account.tr()}?   ',
-                                    style:
-                                    TextStyle(fontFamily: 'Poppins', fontSize: 10.5.sp),
-                                  )),
-                              Container(
-                                margin: EdgeInsets.only(top: 2.h,bottom: 2.h),
-                                alignment: Alignment.topCenter,
-                                padding: EdgeInsets.only(),
+                                alignment: Alignment.topRight,
+                                // decoration: BoxDecoration(color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                height: 4.h,
+                                margin: EdgeInsets.all(5.w),
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => Signup()),
+                                      MaterialPageRoute(
+                                          builder: (context) => Homepage(0)),
                                     );
                                   },
                                   child: Text(
-                                    LocaleKeys.Signup.tr(),
-                                    overflow: TextOverflow.ellipsis,
+                                    LocaleKeys.Skip_continue.tr(),
                                     style: TextStyle(
-                                        fontFamily: 'Poppins_semiBold', fontSize: 12.sp,color: color.primarycolor),
+                                        fontFamily: 'Poppins',
+                                        color: color.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13.sp),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
+                                )),
+                            Image.asset("Icons/logo-white.png", height: 20.h,
+                              width: 50.w,),
+                            Card(
+                              margin: EdgeInsets.all(5.w),
+                              color: color.white,
+                              elevation: 3,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    margin:
+                                    EdgeInsets.only(
+                                        left: 4.5.w, top: 3.5.h, bottom: 1.h),
+                                    child: Text(
+                                      LocaleKeys.Login.tr(),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 23.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Poppins_Bold',
+                                          color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                    ),
+                                  ),
+                                  // Container(
+                                  //   alignment: Alignment.topLeft,
+                                  //   margin:
+                                  //   EdgeInsets.only(left: 4.5.w, top: 3.5.h, bottom: 1.h),
+                                  //   child: Text(
+                                  //     LocaleKeys.Loginst.tr(),
+                                  //     overflow: TextOverflow.ellipsis,
+                                  //     maxLines: 1,
+                                  //     style: TextStyle(
+                                  //         fontSize: 12.sp,
+                                  //         fontFamily: 'Poppins_Bold'),
+                                  //   ),
+                                  // ),
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.only(
+                                      left: 4.5.w,
+                                    ),
+                                    child: Text(
+                                      LocaleKeys.Loginst.tr(),
+                                      // LocaleKeys.Signin_to_your_account,
+                                      style: TextStyle(fontSize: 12.sp,
+                                          fontFamily: 'Poppins'),
+                                    ),
+                                  ),
+                                  if (Logintype == "mobile") ...[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 2.5.h,
+                                        bottom: 2.5.h,
+                                        left: 4.w,
+                                        right: 4.w,
+                                      ),
+                                      child: Center(
+                                        child: IntlPhoneField(
+                                          cursorColor: themenofier.isdark ? Colors.black : color.primarycolor,
+                                          disableLengthCheck: true,
+                                          controller: mobile,
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                            hintText: LocaleKeys.Phoneno.tr(),
+                                            border: const OutlineInputBorder(),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                            ),
+                                          ),
+                                          initialCountryCode: 'IN',
+                                          onCountryChanged: (value) {
+                                            countrycode = value.dialCode;
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ] else
+                                    ...[
+                                      Container(
+                                        margin:
+                                        EdgeInsets.only(
+                                            top: 2.5.h, left: 4.w, right: 4.w),
+                                        child: Center(
+                                          child: TextFormField(style: TextStyle(color:Colors.black),
+                                            validator: (value) =>
+                                            Logintype == "email"
+                                                ? Validators.validateEmail(
+                                                value!)
+                                                : null,
+                                            cursorColor: themenofier.isdark ? Colors.black : color.primarycolor,
+                                            controller: email,
+                                            textInputAction: TextInputAction
+                                                .next,
+                                            decoration: InputDecoration(
+                                                hintText: LocaleKeys.Email.tr(),
+                                                border: const OutlineInputBorder(),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: themenofier.isdark ? Colors.black : color.primarycolor,),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: themenofier.isdark ? Colors.black : color.primarycolor,),
+                                                )),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin:
+                                        EdgeInsets.only(
+                                            top: 2.5.h, left: 4.w, right: 4.w),
+                                        child: Center(
+                                          child: TextFormField(style: TextStyle(color:Colors.black),
+                                            validator: (value) =>
+                                                Validators.validatePassword(
+                                                    value!),
+                                            cursorColor: themenofier.isdark ? Colors.black : color.primarycolor,
+                                            controller: password,
+                                            obscureText: _obscureText,
+                                            textInputAction: TextInputAction.done,
+                                            decoration: InputDecoration(
+                                                suffixIcon: IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _obscureText = !_obscureText;
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                      _obscureText
+                                                          ? Icons.visibility
+                                                          : Icons
+                                                          .visibility_off,
+                                                      color: themenofier.isdark ? Colors.black : color.primarycolor,
+                                                    )),
+                                                hintText: LocaleKeys.Password.tr(),
+                                                border: const OutlineInputBorder(),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: themenofier.isdark ? Colors.black : color.primarycolor,),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: themenofier.isdark ? Colors.black : color.primarycolor,),
+                                                )),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        margin: EdgeInsets.only(
+                                            right: 4.w, top: 1.5.h),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (
+                                                      context) => const Forgotpass()),
+                                            );
+                                          },
+                                          child: Text(
+                                            LocaleKeys.Forgot_Password.tr(),
+                                            style: TextStyle(
+                                                fontFamily: 'Poppins_semiBold',
+                                                fontSize: 10.5.sp,
+                                                color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: 2.h,
+                                      right: 4.w,
+                                      left: 4.w,
+                                    ),
+                                    height: 6.5.h,
+                                    width: double.infinity,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        // if (mobile.value.text.isEmpty) {
+                                        //   loader.showErroDialog(description: "enter");
+                                        // }
 
-                        ],
+                                        if (_formkey.currentState!.validate()) {
+                                          if (Logintype == "mobile") {
+                                            if (mobile.value.text.isEmpty) {
+                                              loader.showErroDialog(
+                                                  description:
+                                                  LocaleKeys
+                                                      .Please_enter_all_details
+                                                      .tr());
+                                            } else {
+                                              login();
+                                            }
+                                          } else {
+                                            login();
+                                          }
+                                        }
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: themenofier.isdark ? Colors.black : color.primarycolor,
+                                      ),
+                                      child: Text(
+                                        LocaleKeys.Login.tr(),
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins_Bold',
+                                            color: Colors.white,
+                                            fontSize: 13.sp),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 2.5.h),
+                                    child: Text(LocaleKeys.OR.tr(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins_semiBold',
+                                          fontSize: 11.sp,
+                                        )),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 1.h,
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.black26,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                6)),
+                                        child: Card(
+                                          elevation: 0,
+                                          child: InkWell(
+                                              borderRadius: BorderRadius.zero,
+                                              onTap: () async {
+                                                googlelogin();
+                                              },
+                                              child: Image.asset(
+                                                'Icons/google.png',
+                                                height: 5.h,
+                                                width: 11.w,
+                                              )),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 4.w,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.black26,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                                6)),
+                                        child: Card(
+                                          elevation: 0,
+                                          child: InkWell(
+                                              onTap: () async {
+                                                _FBlogin();
+                                              },
+                                              child: Image.asset(
+                                                'Icons/facebook.png',
+                                                height: 5.h,
+                                                width: 11.w,
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          alignment: Alignment.topCenter,
+                                          margin: EdgeInsets.only(
+                                              top: 2.h, bottom: 2.h),
+                                          child: Text(
+                                            '${LocaleKeys.Dont_have_an_account
+                                                .tr()}?   ',
+                                            style:
+                                            TextStyle(fontFamily: 'Poppins',
+                                                fontSize: 10.5.sp),
+                                          )),
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            top: 2.h, bottom: 2.h),
+                                        alignment: Alignment.topCenter,
+                                        padding: EdgeInsets.only(),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Signup()),
+                                            );
+                                          },
+                                          child: Text(
+                                            LocaleKeys.Signup.tr(),
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontFamily: 'Poppins_semiBold',
+                                                fontSize: 12.sp,
+                                                color: themenofier.isdark ? Colors.black : color.primarycolor),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                    ),
+                  ),
+                  // bottomSheet: Container(
+                  //     // decoration: BoxDecoration(color: themenofier.isdark ? Colors.black : color.primarycolor),
+                  //     height: 8.h,
+                  //     width: MediaQuery.of(context).size.width,
+                  //     child: InkWell(
+                  //       onTap: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(builder: (context) => Homepage(0)),
+                  //         );
+                  //       },
+                  //       child: Center(
+                  //           child: Text(
+                  //         LocaleKeys.Skip_continue.tr(),
+                  //         style: TextStyle(
+                  //             fontFamily: 'Poppins',
+                  //             color: themenofier.isdark ? Colors.black : color.primarycolor,
+                  //             fontSize: 13.sp),
+                  //       )),
+                  //     )),
                 ),
               ),
             ),
-          ),
-          // bottomSheet: Container(
-          //     // decoration: BoxDecoration(color: color.primarycolor),
-          //     height: 8.h,
-          //     width: MediaQuery.of(context).size.width,
-          //     child: InkWell(
-          //       onTap: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => Homepage(0)),
-          //         );
-          //       },
-          //       child: Center(
-          //           child: Text(
-          //         LocaleKeys.Skip_continue.tr(),
-          //         style: TextStyle(
-          //             fontFamily: 'Poppins',
-          //             color: color.primarycolor,
-          //             fontSize: 13.sp),
-          //       )),
-          //     )),
-        ),
-      ),
-    );
+          );
+        });
   }
 
   googlelogin() async {
