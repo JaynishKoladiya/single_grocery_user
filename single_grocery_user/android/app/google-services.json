@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "993275063057",
+    "project_id": "gayathrimilk-27d5f",
+    "storage_bucket": "gayathrimilk-27d5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993275063057:android:8bc23c1a8123174ea37ab0",
+        "android_client_info": {
+          "package_name": "app.gayathri.milk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993275063057-h26080po3q9ppgs2t6o8936lbaemd2eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.gayathri.milk",
+            "certificate_hash": "27f373101c95e8e99eef7a88faeb830db629465d"
+          }
+        },
+        {
+          "client_id": "993275063057-pvm201td8avjorplim5nggb8ghnq3vg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.gayathri.milk",
+            "certificate_hash": "24dff3ea207fb8d6aee3af30d0f77c9d7f6bfc06"
+          }
+        },
+        {
+          "client_id": "993275063057-tmuigc5drnjrp6e4eead6ou722vnjkqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.gayathri.milk",
+            "certificate_hash": "547ecaff31b5dc0bc31d85a1f15b255e6d134f5e"
+          }
+        },
+        {
+          "client_id": "993275063057-fpg0v8p7to700bs2lnjn98dvg0viple3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-buFnzFUiQgBGf78zMGcMON6jy8vLH4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993275063057-fpg0v8p7to700bs2lnjn98dvg0viple3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
