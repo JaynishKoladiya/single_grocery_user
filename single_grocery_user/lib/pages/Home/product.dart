@@ -569,11 +569,9 @@ class _ProductState extends State<Product> {
                                         right: 4.w,
                                       ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          if (itemdata!.data!.hasVariation ==
-                                              "1") ...[
+                                          /*if (itemdata!.data!.hasVariation == "1") ...[
                                             Text(
                                               textAlign: TextAlign.center,
                                               "${itemdata!.data!
@@ -598,7 +596,7 @@ class _ProductState extends State<Product> {
                                                   color: color.grey,
                                                 ),
                                               ),
-                                            ],
+                                            ],*/
                                           // Text("${itemdata!.data!.itemQty}"),
                                           // if (itemdata!.data!.itemQty == "" ||
                                           //     double.parse(itemdata!.data!.itemQty
@@ -1303,6 +1301,7 @@ class _ProductState extends State<Product> {
                                                                         fontSize: 13,
                                                                         fontFamily:
                                                                         'Poppins_bold',
+                                                                        color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                                         fontWeight:
                                                                         FontWeight
                                                                             .w600),
@@ -1330,11 +1329,8 @@ class _ProductState extends State<Product> {
                                                                                   .toString()))}$currency",
                                                                       style: TextStyle(
                                                                           fontSize: 13,
-                                                                          fontFamily:
-                                                                          'Poppins_bold',
-                                                                          fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
+                                                                          fontFamily: 'Poppins_bold',
+                                                                          fontWeight: FontWeight.w600),
                                                                     ),
                                                                   ],
                                                               ],
@@ -1370,9 +1366,7 @@ class _ProductState extends State<Product> {
                                                                           4),
                                                                       border: Border
                                                                           .all(
-                                                                          color:
-                                                                          color
-                                                                              .primarycolor)),
+                                                                          color: themenofier.isdark ? Colors.white : color.primarycolor)),
                                                                   height: 3.5.h,
                                                                   width: 32.w,
                                                                   child: Center(
@@ -1385,9 +1379,7 @@ class _ProductState extends State<Product> {
                                                                           'Poppins',
                                                                           fontSize: 9.5
                                                                               .sp,
-                                                                          color:
-                                                                          color
-                                                                              .primarycolor),
+                                                                          color: themenofier.isdark ? Colors.white : color.primarycolor),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1490,9 +1482,7 @@ class _ProductState extends State<Product> {
                                                                           4),
                                                                       border: Border
                                                                           .all(
-                                                                          color:
-                                                                          color
-                                                                              .primarycolor)),
+                                                                          color: color.primarycolor)),
                                                                   height: 3.5.h,
                                                                   width: 32.w,
                                                                   child: Center(
@@ -1567,8 +1557,8 @@ class _ProductState extends State<Product> {
                                                                               .itemQty!
                                                                               .toString(),
                                                                           style: TextStyle(
-                                                                              fontSize: 10
-                                                                                  .sp),
+                                                                              fontSize: 10.sp,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                       InkWell(
@@ -1642,10 +1632,8 @@ class _ProductState extends State<Product> {
                                                                             }
                                                                           },
                                                                           child: Icon(
-                                                                            Icons
-                                                                                .add,
-                                                                            color: color
-                                                                                .primarycolor,
+                                                                            Icons.add,
+                                                                            color: color.primarycolor,
                                                                             size: 16,
                                                                           )),
                                                                     ],
