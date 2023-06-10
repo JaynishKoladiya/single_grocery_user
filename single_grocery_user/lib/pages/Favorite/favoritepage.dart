@@ -232,25 +232,29 @@ class _FavoriteState extends State<Favorite> {
                                                     ),
                                               );
                                             },
-                                            child: Row(children: [
+                                            child: Row(
+                                                children: [
                                               Stack(
                                                 children: [
-                                                  SizedBox(
-                                                    width: 28.w,
-                                                    height: 15.5.h,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                        child: Image(
-                                                          image: NetworkImage(
-                                                            favoritedata!
-                                                                .data![index]
-                                                                .imageUrl
-                                                                .toString(),
-                                                          ),
-                                                          fit: BoxFit.contain,
-                                                        )),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 20.0),
+                                                    child: SizedBox(
+                                                      width: 28.w,
+                                                      height: 10.0.h,
+                                                      child: ClipRRect(
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              7),
+                                                          child: Image(
+                                                            image: NetworkImage(
+                                                              favoritedata!
+                                                                  .data![index]
+                                                                  .imageUrl
+                                                                  .toString(),
+                                                            ),
+                                                            fit: BoxFit.contain,
+                                                          )),
+                                                    ),
                                                   ),
                                                   if (favoritedata!
                                                       .data![index]
@@ -305,19 +309,19 @@ class _FavoriteState extends State<Favorite> {
                                                                 .only(
                                                                 left: 1.w,
                                                                 right: 1.w,
-                                                                top: 0.5.h),
-                                                            decoration: BoxDecoration(
-                                                              borderRadius:
-                                                              BorderRadius
-                                                                  .circular(6),
-                                                              color: Colors
-                                                                  .black26,
-                                                            ),
+                                                                top: 0.0.h),
+                                                            // decoration: BoxDecoration(
+                                                            //   borderRadius:
+                                                            //   BorderRadius
+                                                            //       .circular(6),
+                                                            //   color: Colors
+                                                            //       .black26,
+                                                            // ),
                                                             child: SvgPicture
                                                                 .asset(
                                                               'Icons/Favoritedark.svg',
-                                                              color: Colors
-                                                                  .white,
+                                                              // 'Icons/Favoritedark.svg',
+                                                              color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                             )),
                                                       )),
                                                 ],
@@ -448,6 +452,7 @@ class _FavoriteState extends State<Favorite> {
                                                                 fontSize: 12.sp,
                                                                 fontFamily:
                                                                 'Poppins_semibold',
+                                                                color: themenofier.isdark ? Colors.white : color.primarycolor
                                                               ),
                                                             )
                                                           ] else
@@ -477,6 +482,7 @@ class _FavoriteState extends State<Favorite> {
                                                                       .sp,
                                                                   fontFamily:
                                                                   'Poppins_semibold',
+                                                                  color: themenofier.isdark ? Colors.white : color.primarycolor
                                                                 ),
                                                               )
                                                             ],
@@ -521,8 +527,7 @@ class _FavoriteState extends State<Favorite> {
                                                                           fontSize: 9.5
                                                                               .sp,
                                                                           color:
-                                                                          color
-                                                                              .primarycolor),
+                                                                          themenofier.isdark ? Colors.white : color.primarycolor),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -596,8 +601,7 @@ class _FavoriteState extends State<Favorite> {
                                                                         border: Border
                                                                             .all(
                                                                             color:
-                                                                            Colors
-                                                                                .grey)),
+                                                                            themenofier.isdark ? Colors.white : color.primarycolor)),
                                                                     height: 3.5
                                                                         .h,
                                                                     width: 17.w,
@@ -612,8 +616,7 @@ class _FavoriteState extends State<Favorite> {
                                                                             fontSize: 9.5
                                                                                 .sp,
                                                                             color:
-                                                                            color
-                                                                                .primarycolor),
+                                                                            themenofier.isdark ? Colors.white : color.primarycolor),
                                                                       ),
                                                                     )),
                                                               ),
@@ -628,8 +631,7 @@ class _FavoriteState extends State<Favorite> {
                                                                   decoration: BoxDecoration(
                                                                     border: Border
                                                                         .all(
-                                                                        color: Colors
-                                                                            .grey),
+                                                                        color: themenofier.isdark ? Colors.white : color.primarycolor),
                                                                     borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -654,8 +656,7 @@ class _FavoriteState extends State<Favorite> {
                                                                           child: Icon(
                                                                             Icons
                                                                                 .remove,
-                                                                            color: color
-                                                                                .primarycolor,
+                                                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                                             size: 18,
                                                                           )),
                                                                       Container(
@@ -722,8 +723,7 @@ class _FavoriteState extends State<Favorite> {
                                                                           child: Icon(
                                                                             Icons
                                                                                 .add,
-                                                                            color: color
-                                                                                .primarycolor,
+                                                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                                             size: 18,
                                                                           )),
                                                                     ],

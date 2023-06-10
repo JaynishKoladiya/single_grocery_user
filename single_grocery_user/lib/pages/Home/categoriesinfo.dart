@@ -554,7 +554,8 @@ class categories_itemsState extends State<categories_items> {
                                                           ? Colors.white
                                                           : color.primarycolor)),
                                               height: 3.5.h,
-                                              width: 32.w,
+                                              margin: EdgeInsets.symmetric(horizontal: 2.w),
+                                              width: double.infinity,
                                               child: Center(
                                                 child: Text(
                                                   LocaleKeys.ADD
@@ -662,7 +663,8 @@ class categories_itemsState extends State<categories_items> {
                                                           ? Colors.white
                                                           : color.primarycolor)),
                                               height: 3.5.h,
-                                              width: 32.w,
+                                              margin: EdgeInsets.symmetric(horizontal: 2.w),
+                                              width: double.infinity,
                                               child: Center(
                                                 child: Text(
                                                   LocaleKeys.ADD
@@ -685,8 +687,9 @@ class categories_itemsState extends State<categories_items> {
                                             .isCart ==
                                             "1") ...[
                                           Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 2.w),
                                             height: 3.6.h,
-                                            width: 32.w,
+                                            width: double.infinity,
                                             decoration:
                                             BoxDecoration(
                                               border: Border.all(

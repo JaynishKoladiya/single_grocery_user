@@ -84,10 +84,16 @@ class _ProfilepageState extends State<Profilepage> {
             child: Column(
               children: [
                 Container(
-                  height: 23.h,
+                  height: 23.h,margin: EdgeInsets.only(top: 5),
                   width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: themenofier.isdark
+                  ? Colors.white
+                      : color.primarycolor,
+                  ),
                   // color: themenofier.isdark ? Colors.white : color.black,
-                  color: themenofier.isdark ? Colors.white : color.primarycolor,
+
                   child: Column(
                     children: [
                       Row(
@@ -145,7 +151,7 @@ class _ProfilepageState extends State<Profilepage> {
                                     ),
                                   ))),
                           Padding(padding: EdgeInsets.only(right: 4.8.w)),
-                          // Image.asset("Icons/logo-white.png",height: 20.h,width: 50.w,),
+                         // Image.asset("Icons/logo-white.png",height: 20.h,width: 50.w,),
                         ],
                       ),
                       Row(
