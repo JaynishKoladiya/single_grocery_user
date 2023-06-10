@@ -84,12 +84,16 @@ class _ProfilepageState extends State<Profilepage> {
             child: Column(
               children: [
                 Container(
-                  height: 23.h,
+                  height: 23.h,margin: EdgeInsets.only(top: 5),
                   width: MediaQuery.of(context).size.width,
-                  // color: themenofier.isdark ? Colors.white : color.black,
-                  color: themenofier.isdark
-                      ? Colors.white
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: themenofier.isdark
+                  ? Colors.white
                       : color.primarycolor,
+                  ),
+                  // color: themenofier.isdark ? Colors.white : color.black,
+
                   child: Column(
                     children: [
                       Row(
@@ -726,7 +730,9 @@ class _ProfilepageState extends State<Profilepage> {
                                 SvgPicture.asset(
                                   'svgicon/Changelayout.svg',
                                   height: height.settingiconheight,
-
+                                  color: themenofier.isdark
+                                      ? Colors.white
+                                      : color.black,
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
@@ -753,7 +759,7 @@ class _ProfilepageState extends State<Profilepage> {
                           height: 0.8.sp,
                           width: MediaQuery.of(context).size.width,
                           color:
-                          themenofier.isdark ? Colors.white : Colors.grey,
+                              themenofier.isdark ? Colors.white : Colors.grey,
                         ),
                         InkWell(
                           onTap: () {
@@ -1269,7 +1275,8 @@ class _ProfilepageState extends State<Profilepage> {
                         style: TextStyle(
                             fontSize: 11.5.sp,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins',color: Colors.grey)),
+                            fontFamily: 'Poppins',
+                            color: Colors.grey)),
                   ),
                   Container(
                     height: 0.8.sp,

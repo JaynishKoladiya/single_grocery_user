@@ -354,7 +354,8 @@ class _LoginState extends State<Login> {
                                       LocaleKeys.Loginst.tr(),
                                       // LocaleKeys.Signin_to_your_account,
                                       style: TextStyle(fontSize: 12.sp,
-                                          fontFamily: 'Poppins'),
+                                          fontFamily: 'Poppins',
+                                          color:  Colors.black ),
                                     ),
                                   ),
                                   if (Logintype == "mobile") ...[
@@ -599,7 +600,8 @@ class _LoginState extends State<Login> {
                                                 .tr()}?   ',
                                             style:
                                             TextStyle(fontFamily: 'Poppins',
-                                                fontSize: 10.5.sp),
+                                                fontSize: 10.5.sp,
+                                            color: Colors.black),
                                           )),
                                       Container(
                                         margin: EdgeInsets.only(

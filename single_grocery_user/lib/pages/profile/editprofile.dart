@@ -269,7 +269,7 @@ class _EditprofileState extends State<Editprofile> {
                               icon: Icon(
                                 Icons.photo_camera,
                                   color: themenofier.isdark
-                                      ? Colors.white
+                                      ? Colors.black
                                       : color.primarycolor
                               ),
                               onPressed: () {
