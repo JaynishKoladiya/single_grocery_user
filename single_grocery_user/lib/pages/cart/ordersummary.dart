@@ -315,31 +315,31 @@ class _OrdersummaryState extends State<Ordersummary> {
                                               ),
                                             ),
                                           ],
-                                          if (summarydata!.data![index].subscription_id ==0) ...[
-                                            Expanded(
-                                              child: Text(
-                                                "No Subscription",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: 9.sp,
-                                                  // color: Colors.grey,
-                                                  fontFamily: 'Poppins',
-                                                ),
-                                              ),
-                                            ),
-                                          ]
-                                          else ...[
-                                            Expanded(
-                                              child: Text("${list[summarydata!.data![index].subscription_id-1]}",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: 9.sp,
-                                                  color: Colors.grey,
-                                                  fontFamily: 'Poppins',
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          // if (summarydata!.data![index].subscription_id ==0) ...[
+                                          //   Expanded(
+                                          //     child: Text(
+                                          //       "No Subscription",
+                                          //       overflow: TextOverflow.ellipsis,
+                                          //       style: TextStyle(
+                                          //         fontSize: 9.sp,
+                                          //         // color: Colors.grey,
+                                          //         fontFamily: 'Poppins',
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ]
+                                          // else ...[
+                                          //   Expanded(
+                                          //     child: Text("${list[summarydata!.data![index].subscription_id-1]}",
+                                          //       overflow: TextOverflow.ellipsis,
+                                          //       style: TextStyle(
+                                          //         fontSize: 9.sp,
+                                          //         color: Colors.grey,
+                                          //         fontFamily: 'Poppins',
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ],
                                           if (summarydata!.data![index].subscription_id ==1 || summarydata!.data![index].subscription_id ==2 || summarydata!.data![index].subscription_id ==3) ...[
                                             Expanded(
                                               child: Text(

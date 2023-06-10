@@ -454,7 +454,7 @@ class _ViewcartState extends State<Viewcart> {
                                                   child: Icon(
                                                     Icons.remove,
                                                     color: color.primarycolor,
-                                                    size: 16,
+                                                    size: 18,
                                                   )),
                                               Container(
                                                 decoration: BoxDecoration(
@@ -464,8 +464,7 @@ class _ViewcartState extends State<Viewcart> {
                                                 child: Text(
                                                   cartdata!.data![index].qty
                                                       .toString(),
-
-                                                  style: TextStyle(color: Colors.white,
+                                                  style: TextStyle(color: color.primarycolor,
                                                       fontSize: 10.sp),
                                                 ),
                                               ),
@@ -479,7 +478,7 @@ class _ViewcartState extends State<Viewcart> {
                                                   child: Icon(
                                                     Icons.add,
                                                     color: color.primarycolor,
-                                                    size: 16,
+                                                    size: 18,
                                                   )),
                                             ],
                                           ),

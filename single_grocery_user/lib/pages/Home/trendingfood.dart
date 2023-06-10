@@ -190,11 +190,11 @@ class _TrendingfoodState extends State<Trendingfood> {
                           context: context,
                           builder: (context) {
                             return Consumer(builder:
-                                (context, ThemeModel themenofier, child) {
+                                (context, ThemeModel themenotifier, child) {
                               return StatefulBuilder(
                                 builder: (context, setState) {
                                   return Container(
-                                    color: themenofier.isdark
+                                    color: themenotifier.isdark
                                         ? Colors.black
                                         : Colors.white,
                                     padding: EdgeInsets.only(
@@ -566,204 +566,297 @@ class _TrendingfoodState extends State<Trendingfood> {
                                           ),
                                         ],
                                         //
-                                        // if (itemdata!.data![index].availableQty ==
-                                        //     "" ||
-                                        //     int.parse(itemdata!
-                                        //         .data![index].availableQty
-                                        //         .toString()) <=
-                                        //         0) ...[
-                                        //   InkWell(
-                                        //     onTap: () {},
-                                        //     child: Container(
-                                        //       decoration: BoxDecoration(
-                                        //           borderRadius:
-                                        //           BorderRadius.circular(4),
-                                        //           border: Border.all(
-                                        //               color: Colors.grey)),
-                                        //       height: 3.5.h,
-                                        //       width: 17.w,
-                                        //       child: Center(
-                                        //         child: Text(
-                                        //           LocaleKeys.ADD.tr(),
-                                        //           style: TextStyle(
-                                        //               fontFamily: 'Poppins',
-                                        //               fontSize: 9.5.sp,
-                                        //               color: color.primarycolor),
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ] else if (itemdata!
-                                        //     .data![index].isCart ==
-                                        //     "0") ...[
-                                        //   InkWell(
-                                        //     onTap: () async {
-                                        //       if (itemdata!.data![index]
-                                        //           .hasVariation ==
-                                        //           "1" ||
-                                        //           itemdata!.data![index].addons!
-                                        //               .isNotEmpty) {
-                                        //         cart = await Get.to(() =>
-                                        //             showvariation(
-                                        //                 itemdata!.data![index]));
-                                        //         if (cart == 1) {
-                                        //           setState(() {
-                                        //             itemdata!.data![index]
-                                        //                 .isCart = "1";
-                                        //             itemdata!.data![index]
-                                        //                 .itemQty = int.parse(
-                                        //                 itemdata!.data![index]
-                                        //                     .itemQty!
-                                        //                     .toString()) +
-                                        //                 1;
-                                        //           });
-                                        //         }
-                                        //       } else {
-                                        //         if (userid == "") {
-                                        //           Navigator.of(context)
-                                        //               .pushAndRemoveUntil(
-                                        //               MaterialPageRoute(
-                                        //                   builder: (c) =>
-                                        //                       Login()),
-                                        //                   (r) => false);
-                                        //         } else {
-                                        //           addtocart(
-                                        //               itemdata!.data![index].id,
-                                        //               itemdata!
-                                        //                   .data![index].itemName,
-                                        //               itemdata!
-                                        //                   .data![index].imageName,
-                                        //               itemdata!
-                                        //                   .data![index].itemType,
-                                        //               itemdata!.data![index].tax,
-                                        //               itemdata!
-                                        //                   .data![index].price);
-                                        //           print("add to cart api");
-                                        //         }
-                                        //       }
-                                        //     },
-                                        //     child: Container(
-                                        //         decoration: BoxDecoration(
-                                        //             borderRadius:
-                                        //             BorderRadius.circular(4),
-                                        //             border: Border.all(
-                                        //                 color: Colors.grey)),
-                                        //         height: 3.5.h,
-                                        //         width: 17.w,
-                                        //         child: Center(
-                                        //           child: Text(
-                                        //             LocaleKeys.ADD.tr(),
-                                        //             style: TextStyle(
-                                        //                 fontFamily: 'Poppins',
-                                        //                 fontSize: 9.5.sp,
-                                        //                 color: color.primarycolor),
-                                        //           ),
-                                        //         )),
-                                        //   ),
-                                        // ] else if (itemdata!
-                                        //     .data![index].isCart ==
-                                        //     "1") ...[
-                                        //   Container(
-                                        //     height: 3.6.h,
-                                        //     width: 22.w,
-                                        //     decoration: BoxDecoration(
-                                        //       border:
-                                        //       Border.all(color: Colors.grey),
-                                        //       borderRadius:
-                                        //       BorderRadius.circular(5),
-                                        //       // color: Theme.of(context).accentColor
-                                        //     ),
-                                        //     child: Row(
-                                        //       mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceAround,
-                                        //       children: [
-                                        //         InkWell(
-                                        //             onTap: () {
-                                        //               loader.showErroDialog(
-                                        //                   description: LocaleKeys
-                                        //                       .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
-                                        //                       .tr());
-                                        //             },
-                                        //             child: Icon(
-                                        //               Icons.remove,
-                                        //               color: color.primarycolor,
-                                        //               size: 16,
-                                        //             )),
-                                        //         Container(
-                                        //           decoration: BoxDecoration(
-                                        //             borderRadius:
-                                        //             BorderRadius.circular(3),
-                                        //           ),
-                                        //           child: Text(
-                                        //             itemdata!
-                                        //                 .data![index].itemQty!
-                                        //                 .toString(),
-                                        //             style: TextStyle(
-                                        //                 fontSize: 10.sp),
-                                        //           ),
-                                        //         ),
-                                        //         InkWell(
-                                        //             onTap: () async {
-                                        //               if (itemdata!.data![index]
-                                        //                   .hasVariation ==
-                                        //                   "1" ||
-                                        //                   // ignore: prefer_is_empty
-                                        //                   itemdata!
-                                        //                       .data![index]
-                                        //                       .addons!
-                                        //                       .length >
-                                        //                       0) {
-                                        //                 cart = await Get.to(() =>
-                                        //                     showvariation(
-                                        //                         itemdata!.data![
-                                        //                         index]));
-                                        //                 if (cart == 1) {
-                                        //                   setState(
-                                        //                         () {
-                                        //                       itemdata!
-                                        //                           .data![index]
-                                        //                           .itemQty =
-                                        //                           int.parse(itemdata!
-                                        //                               .data![
-                                        //                           index]
-                                        //                               .itemQty!
-                                        //                               .toString()) +
-                                        //                               1;
-                                        //                     },
-                                        //                   );
-                                        //                 }
-                                        //               } else {
-                                        //                 addtocart(
-                                        //                     itemdata!
-                                        //                         .data![index].id,
-                                        //                     itemdata!.data![index]
-                                        //                         .itemName,
-                                        //                     itemdata!.data![index]
-                                        //                         .imageName,
-                                        //                     itemdata!.data![index]
-                                        //                         .itemType,
-                                        //                     itemdata!
-                                        //                         .data![index].tax,
-                                        //                     itemdata!.data![index]
-                                        //                         .price);
-                                        //                 print("addtocartAPI");
-                                        //                 // addtocart(
-                                        //                 //     index,
-                                        //                 //     "trending");
-                                        //               }
-                                        //             },
-                                        //             child: Icon(
-                                        //               Icons.add,
-                                        //               color: color.primarycolor,
-                                        //               size: 16,
-                                        //             )),
-                                        //       ],
-                                        //     ),
-                                        //   ),
-                                        // ],
                                       ],
                                     ),
                                   ),
+                                  if (itemdata!
+                                      .data![
+                                  index]
+                                      .hasVariation ==
+                                      "0") ...[
+                                    if (itemdata!
+                                        .data![
+                                    index]
+                                        .availableQty ==
+                                        "" ||
+                                        int.parse(itemdata!
+                                            .data![
+                                        index]
+                                            .availableQty
+                                            .toString()) <=
+                                            0) ...[
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius
+                                                  .circular(
+                                                  4),
+                                              border: Border.all(
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor)),
+                                          height: 3.5.h,
+                                          width: 32.w,
+                                          child: Center(
+                                            child: Text(
+                                              LocaleKeys.ADD
+                                                  .tr(),
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  'Poppins',
+                                                  fontSize:
+                                                  9.5.sp,
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                  ]
+                                  else if (itemdata!
+                                      .data![
+                                  index]
+                                      .isCart ==
+                                      "0") ...[
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (itemdata!
+                                            .data![
+                                        index]
+                                            .hasVariation ==
+                                            "1" ||
+                                            itemdata!
+                                                .data![
+                                            index]
+                                                .addons!
+                                                .isNotEmpty) {
+                                          cart = await Get.to(
+                                                  () => showvariation(
+                                                  itemdata!
+                                                      .data![
+                                                  index]));
+                                          if (cart == 1) {
+                                            setState(() {
+                                              itemdata!
+                                                  .data![
+                                              index]
+                                                  .isCart = "1";
+                                              itemdata!
+                                                  .data![
+                                              index]
+                                                  .itemQty = int.parse(itemdata!
+                                                  .data![
+                                              index]
+                                                  .itemQty!
+                                                  .toString()) +
+                                                  1;
+                                            });
+                                          }
+                                        } else {
+                                          if (userid == "") {
+                                            Navigator.of(
+                                                context)
+                                                .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (c) =>
+                                                        Login()),
+                                                    (r) =>
+                                                false);
+                                          } else {
+                                            addtocart(
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .id,
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .itemName,
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .imageName,
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .itemType,
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .tax,
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .price);
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius
+                                                  .circular(
+                                                  4),
+                                              border: Border.all(
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor)),
+                                          height: 3.5.h,
+                                          width: 32.w,
+                                          child: Center(
+                                            child: Text(
+                                              LocaleKeys.ADD
+                                                  .tr(),
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  'Poppins',
+                                                  fontSize:
+                                                  9.5.sp,
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor),
+                                            ),
+                                          )),
+                                    ),
+                                  ]
+                                  else if (itemdata!
+                                        .data![
+                                    index]
+                                        .isCart ==
+                                        "1") ...[
+                                      Container(
+                                        height: 3.6.h,
+                                        width: 32.w,
+                                        decoration:
+                                        BoxDecoration(
+                                          border: Border.all(
+                                              color: themenotifier.isdark
+                                                  ? Colors.white
+                                                  : color.primarycolor),
+                                          borderRadius:
+                                          BorderRadius
+                                              .circular(5),
+                                          // color: Theme.of(context).accentColor
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceAround,
+                                          children: [
+                                            GestureDetector(
+                                                onTap: () {
+                                                  loader
+                                                      .showErroDialog(
+                                                    description:
+                                                    LocaleKeys.The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
+                                                        .tr(),
+                                                  );
+                                                },
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor,
+                                                  size: 18,
+                                                )),
+                                            Container(
+                                              decoration:
+                                              BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(
+                                                    3),
+                                              ),
+                                              child: Text(
+                                                itemdata!
+                                                    .data![
+                                                index]
+                                                    .itemQty!
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize:
+                                                    10.sp,color: themenotifier.isdark
+                                                    ? Colors.white
+                                                    : color.primarycolor),
+                                              ),
+                                            ),
+                                            InkWell(
+                                                onTap:
+                                                    () async {
+                                                  if (itemdata!
+                                                      .data![
+                                                  index]
+                                                      .hasVariation ==
+                                                      "1" ||
+                                                      // ignore: prefer_is_empty
+                                                      itemdata!
+                                                          .data![index]
+                                                          .addons!
+                                                          .length >
+                                                          0) {
+                                                    cart = await Navigator.of(
+                                                        context)
+                                                        .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              showvariation(
+                                                                  itemdata!.data![index]),
+                                                        ));
+
+                                                    if (cart ==
+                                                        1) {
+                                                      setState(
+                                                              () {
+                                                            itemdata!
+                                                                .data![
+                                                            index]
+                                                                .itemQty = int.parse(
+                                                                itemdata!.data![index].itemQty) +
+                                                                1;
+                                                          });
+                                                    }
+                                                  } else {
+                                                    addtocart(
+                                                        itemdata!
+                                                            .data![
+                                                        index]
+                                                            .id,
+                                                        itemdata!
+                                                            .data![
+                                                        index]
+                                                            .itemName,
+                                                        itemdata!
+                                                            .data![
+                                                        index]
+                                                            .imageName,
+                                                        itemdata!
+                                                            .data![
+                                                        index]
+                                                            .itemType,
+                                                        itemdata!
+                                                            .data![
+                                                        index]
+                                                            .tax,
+                                                        itemdata!
+                                                            .data![index]
+                                                            .price);
+                                                  }
+                                                },
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: themenotifier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor,
+                                                  size: 18,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   Padding(
                                       padding: EdgeInsets.only(
                                           top: MediaQuery.of(context).size.width /

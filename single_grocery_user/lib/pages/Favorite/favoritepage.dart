@@ -656,7 +656,7 @@ class _FavoriteState extends State<Favorite> {
                                                                                 .remove,
                                                                             color: color
                                                                                 .primarycolor,
-                                                                            size: 16,
+                                                                            size: 18,
                                                                           )),
                                                                       Container(
                                                                         decoration:
@@ -724,7 +724,7 @@ class _FavoriteState extends State<Favorite> {
                                                                                 .add,
                                                                             color: color
                                                                                 .primarycolor,
-                                                                            size: 16,
+                                                                            size: 18,
                                                                           )),
                                                                     ],
                                                                   ),

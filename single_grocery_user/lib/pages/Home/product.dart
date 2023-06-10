@@ -1540,7 +1540,7 @@ class _ProductState extends State<Product> {
                                                                                 .remove,
                                                                             color: color
                                                                                 .primarycolor,
-                                                                            size: 16,
+                                                                            size: 18,
                                                                           )),
                                                                       Container(
                                                                         decoration:
@@ -1634,7 +1634,7 @@ class _ProductState extends State<Product> {
                                                                           child: Icon(
                                                                             Icons.add,
                                                                             color: color.primarycolor,
-                                                                            size: 16,
+                                                                            size: 18,
                                                                           )),
                                                                     ],
                                                                   ),

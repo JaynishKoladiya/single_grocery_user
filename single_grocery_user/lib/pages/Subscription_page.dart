@@ -759,7 +759,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                                     Icons.remove,
                                                     color: color
                                                         .primarycolor,
-                                                    size: 16,
+                                                    size: 18,
                                                   )),
                                               Container(
                                                 decoration:
@@ -794,7 +794,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                                     Icons.add,
                                                     color: color
                                                         .primarycolor,
-                                                    size: 16,
+                                                    size: 18,
                                                   )),
                                             ],
                                           ),
@@ -1124,7 +1124,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                         //                 Icons.remove,
                         //                 color: color
                         //                     .primarycolor,
-                        //                 size: 16,
+                        //                 size: 18,
                         //               )),
                         //           Container(
                         //             decoration:
@@ -1193,7 +1193,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                         //                 Icons.add,
                         //                 color: color
                         //                     .primarycolor,
-                        //                 size: 16,
+                        //                 size: 18,
                         //               )),
                         //         ],
                         //       ),
@@ -1260,7 +1260,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                     color: themenofier.isdark
                                         ? Colors.white
                                         : color.primarycolor,
-                                    size: 16,
+                                    size: 18,
                                   )),
                               Container(
                                 decoration:
@@ -1271,10 +1271,12 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       3),
                                 ),
                                 child: Text(
-                                  widget.item!.itemQty!.toString(),
+                                  "${int.parse(
+                                      widget.item!.itemQty.toString()) +
+                                      1}",
                                   style: TextStyle(
                                     fontSize:
-                                    10.sp, color: themenofier.isdark
+                                    12.sp, color: themenofier.isdark
                                       ? Colors.white
                                       : color.primarycolor,),
                                 ),
@@ -1294,7 +1296,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                     color: themenofier.isdark
                                         ? Colors.white
                                         : color.primarycolor,
-                                    size: 16,
+                                    size: 18,
                                   )),
                             ],
                           ),
@@ -1348,7 +1350,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       Icons.remove,
                                       color: color
                                           .primarycolor,
-                                      size: 16,
+                                      size: 18,
                                     )),
                                 Container(
                                   decoration:
@@ -1359,9 +1361,9 @@ class _Subscription_pageState extends State<Subscription_page> {
                                         3),
                                   ),
                                   child: Text(
-                                    widget.item!
-                                        .itemQty!
-                                        .toString(),
+                                    "${int.parse(
+                                        widget.item!.itemQty.toString()) +
+                                        1}",
                                     style: TextStyle(
                                       fontSize:
                                       10.sp, color: themenofier.isdark
@@ -1383,7 +1385,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       Icons.add,
                                       color: color
                                           .primarycolor,
-                                      size: 16,
+                                      size: 18,
                                     )),
                               ],
                             ),
@@ -1437,7 +1439,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       Icons.remove,
                                       color: color
                                           .primarycolor,
-                                      size: 16,
+                                      size: 18,
                                     )),
                                 Container(
                                   decoration:
@@ -1448,9 +1450,9 @@ class _Subscription_pageState extends State<Subscription_page> {
                                         3),
                                   ),
                                   child: Text(
-                                    widget.item!
-                                        .itemQty!
-                                        .toString(),
+                                    "${int.parse(
+                                        widget.item!.itemQty.toString()) +
+                                        1}",
                                     style: TextStyle(
                                       fontSize:
                                       10.sp, color: themenofier.isdark
@@ -1472,15 +1474,12 @@ class _Subscription_pageState extends State<Subscription_page> {
                                       Icons.add,
                                       color: color
                                           .primarycolor,
-                                      size: 16,
+                                      size: 18,
                                     )),
                               ],
                             ),
                           ),
                         ],
-
-
-
 
                         // Start Date
                         if(select.sub_str.value == "One Time")...[

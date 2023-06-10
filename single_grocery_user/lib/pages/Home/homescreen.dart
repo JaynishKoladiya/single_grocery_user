@@ -1094,7 +1094,7 @@ class _HomescreenState extends State<Homescreen> {
                                                               color: themenofier.isdark
                                                                   ? Colors.white
                                                                   : color.primarycolor,
-                                                              size: 16,
+                                                              size: 18,
                                                             )),
                                                         Container(
                                                           decoration:
@@ -1184,7 +1184,7 @@ class _HomescreenState extends State<Homescreen> {
                                                               color: themenofier.isdark
                                                                   ? Colors.white
                                                                   : color.primarycolor,
-                                                              size: 16,
+                                                              size: 18,
                                                             )),
                                                       ],
                                                     ),
@@ -1287,7 +1287,7 @@ class _HomescreenState extends State<Homescreen> {
                                               //                   Icons.add,
                                               //                   color: color
                                               //                       .primarycolor,
-                                              //                   size: 16,
+                                              //                   size: 18,
                                               //                 ),
                                               //                 Text(
                                               //                   "Add",
@@ -1859,7 +1859,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                 Icons.remove,
                                                                 color: color
                                                                     .primarycolor,
-                                                                size: 16,
+                                                                size: 18,
                                                               )),
                                                           Container(
                                                             decoration:
@@ -1946,7 +1946,7 @@ class _HomescreenState extends State<Homescreen> {
                                                                 Icons.add,
                                                                 color: color
                                                                     .primarycolor,
-                                                                size: 16,
+                                                                size: 18,
                                                               )),
                                                         ],
                                                       ),
@@ -2574,7 +2574,7 @@ class _HomescreenState extends State<Homescreen> {
                                                               color: themenofier.isdark
                                                                   ? Colors.white
                                                                   : color.primarycolor,
-                                                              size: 16,
+                                                              size: 18,
                                                             )),
                                                         Container(
                                                           decoration:
@@ -2649,7 +2649,7 @@ class _HomescreenState extends State<Homescreen> {
                                                               color: themenofier.isdark
                                                                   ? Colors.white
                                                                   : color.primarycolor,
-                                                              size: 16,
+                                                              size: 18,
                                                             )),
                                                       ],
                                                     ),
