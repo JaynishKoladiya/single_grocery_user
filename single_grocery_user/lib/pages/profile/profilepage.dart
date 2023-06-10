@@ -84,12 +84,16 @@ class _ProfilepageState extends State<Profilepage> {
             child: Column(
               children: [
                 Container(
-                  height: 23.h,
+                  height: 23.h,margin: EdgeInsets.only(top: 5),
                   width: MediaQuery.of(context).size.width,
-                  // color: themenofier.isdark ? Colors.white : color.black,
-                  color: themenofier.isdark
-                      ? Colors.white
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: themenofier.isdark
+                  ? Colors.white
                       : color.primarycolor,
+                  ),
+                  // color: themenofier.isdark ? Colors.white : color.black,
+
                   child: Column(
                     children: [
                       Row(

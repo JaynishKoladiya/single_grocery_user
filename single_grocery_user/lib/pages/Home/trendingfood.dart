@@ -242,7 +242,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                               Text(
                                                 LocaleKeys.Veg.tr(),
                                                 style: TextStyle(
-                                                    fontFamily: 'Poppins',
+                                                    fontFamily: 'Poppins',color: themenotifier.isdark ? Colors.white : color.primarycolor,
                                                     fontSize: 16),
                                               ),
                                             ],
@@ -268,7 +268,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                               Text(
                                                 LocaleKeys.Nonveg.tr(),
                                                 style: TextStyle(
-                                                    fontFamily: 'Poppins',
+                                                    fontFamily: 'Poppins',color: themenotifier.isdark ? Colors.white : color.primarycolor,
                                                     fontSize: 16),
                                               ),
                                             ],
@@ -294,7 +294,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                               Text(
                                                 LocaleKeys.Both.tr(),
                                                 style: TextStyle(
-                                                    fontFamily: 'Poppins',
+                                                    fontFamily: 'Poppins',color: themenotifier.isdark ? Colors.white : color.primarycolor,
                                                     fontSize: 16),
                                               ),
                                             ],
@@ -355,7 +355,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                 child: Column(children: [
                                   Stack(
                                     children: [
-                                      SizedBox(
+                                      Container(padding: EdgeInsets.only(top: 5),
                                         height:
                                         MediaQuery.of(context).size.width /
                                             4.0,
@@ -591,19 +591,14 @@ class _TrendingfoodState extends State<Trendingfood> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius
-                                                  .circular(
-                                                  4),
+                                              BorderRadius.circular(4),
                                               border: Border.all(
-                                                  color: themenotifier.isdark
-                                                      ? Colors.white
-                                                      : color.primarycolor)),
-                                          height: 3.5.h,
-                                          width: 32.w,
+                                                  color: themenotifier.isdark ? Colors.white : color.primarycolor)),
+                                          height: 3.5.h,margin: EdgeInsets.only(left: 2.w,right: 2.w),
+                                          width: double.infinity,
                                           child: Center(
                                             child: Text(
-                                              LocaleKeys.ADD
-                                                  .tr(),
+                                              LocaleKeys.ADD.tr(),
                                               style: TextStyle(
                                                   fontFamily:
                                                   'Poppins',
@@ -707,7 +702,7 @@ class _TrendingfoodState extends State<Trendingfood> {
                                                       ? Colors.white
                                                       : color.primarycolor)),
                                           height: 3.5.h,
-                                          width: 32.w,
+                                          width: double.infinity,margin: EdgeInsets.only(left: 2.w,right: 2.w),
                                           child: Center(
                                             child: Text(
                                               LocaleKeys.ADD
@@ -730,8 +725,8 @@ class _TrendingfoodState extends State<Trendingfood> {
                                         .isCart ==
                                         "1") ...[
                                       Container(
-                                        height: 3.6.h,
-                                        width: 32.w,
+                                        height: 3.6.h,margin: EdgeInsets.only(left: 2.w,right: 2.w),
+                                        width: double.infinity,
                                         decoration:
                                         BoxDecoration(
                                           border: Border.all(
