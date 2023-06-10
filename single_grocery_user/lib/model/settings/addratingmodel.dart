@@ -17,4 +17,9 @@ class addratingmodel {
     data['message'] = message;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'addratingmodel{status: $status, message: $message}';
+  }
 }

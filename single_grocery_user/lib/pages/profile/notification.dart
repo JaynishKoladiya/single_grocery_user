@@ -141,7 +141,7 @@ class _NotificationpageState extends State<Notificationpage> {
                     style: TextStyle(fontFamily: 'Poppins', fontSize: 10.sp,
                       color: themenofier.isdark
                       ? Colors.white
-                          : color.primarycolor,
+                          : color.black,
                     ),
                   ),
                 ],
@@ -194,7 +194,7 @@ class _NotificationpageState extends State<Notificationpage> {
                     style: TextStyle(fontFamily: 'Poppins', fontSize: 10.sp,
                       color: themenofier.isdark
                           ? Colors.white
-                          : color.primarycolor,
+                          : color.black,
                     ),
                   ),
                 ],

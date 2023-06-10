@@ -33,6 +33,7 @@ class _RatingreviewState extends State<Ratingreview> {
   void initState() {
     super.initState();
     getstatus();
+    reviewAPI();
   }
 
   getstatus() async {
@@ -43,11 +44,15 @@ class _RatingreviewState extends State<Ratingreview> {
   }
 
   Future reviewAPI() async {
+    print("api called");
     var response = await Dio().get(DefaultApi.appUrl + GetAPI.rattinglist);
+    print("finaldata=$response");
     var finallist = await response.data;
+    print("finaldata=$finaldata");
     finaldata = Ratereviewmodel.fromJson(finallist);
     return finaldata;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +86,7 @@ class _RatingreviewState extends State<Ratingreview> {
                   ),
                   floatingActionButton: FloatingActionButton(
                       elevation: 0.0,
-                      backgroundColor: color.black,
+                      backgroundColor: color.primarycolor,
                       onPressed: () {
                         userid == "null"
                             ? Navigator.of(context).pushAndRemoveUntil(
@@ -249,9 +254,7 @@ class _RatingreviewState extends State<Ratingreview> {
                               itemCount: finaldata!.data!.length);
                         }
                         return Center(
-                          child: CircularProgressIndicator(
-                            color: color.primarycolor,
-                          ),
+                          child: Text(" No Reviews Found"),
                         );
                       })));
 
@@ -291,6 +294,7 @@ class _TestimonioalState extends State<Testimonioal> {
           await Dio().post(DefaultApi.appUrl + PostAPI.addrating, data: map);
       finallist = addratingmodel.fromJson(response.data);
 
+      print("finallist=$finallist");
       if (finallist!.status == 1) {
         loader.hideLoading();
         Comment.clear();
@@ -315,139 +319,147 @@ class _TestimonioalState extends State<Testimonioal> {
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 6.h, bottom: 5.h),
-            child: Text(LocaleKeys.Add_Testimonial.tr(),
-                style:
-                    TextStyle(fontSize: 17.sp, fontFamily: 'Poppins_semibold')),
-          ),
-          RatingBar.builder(
-            initialRating: 1,
-            minRating: 1,
-            direction: Axis.horizontal,
-            itemCount: 5,
-            itemSize: 60,
-            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-            itemBuilder: (context, _) => Icon(
-              Icons.star,
-              color: color.yellow,
-            ),
-            onRatingUpdate: (Value) {
-              setState(() {
-                rating = Value.toInt();
-              });
-            },
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Form(
-            key: _formkey,
-            child: Container(
-              margin: EdgeInsets.only(
-                top: 0.8.h,
-                left: 3.5.w,
-                right: 3.5.w,
-              ),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 2,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: TextFormField(
-                controller: Comment,
-                maxLines: 10,
-                cursorColor: Colors.grey,
-                textAlignVertical: TextAlignVertical.top,
-                decoration: InputDecoration(
-                    hintText: LocaleKeys.Enteryoureview.tr(),
-                    hintStyle:
-                        TextStyle(fontSize: 11.sp, fontFamily: "Poppins"),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color:color.primarycolor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color:color.primarycolor),
-                    )),
-              ),
-            ),
-          ),
-          Spacer(),
-          SizedBox(
-            height: 15,
-          )
-        ],
-      ),
-      bottomSheet: Container(
-        margin: EdgeInsets.symmetric(vertical: 1.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Consumer(builder: (context, ThemeModel themenofier, child) {
+        return Column(
           children: [
             Container(
-              // margin: EdgeInsets.only(
-              //   left: 1.6.w,
-              //   right: 1.6.w,
-              //   bottom: 1.5.h,
-              // ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: color.red,
-                ),
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 6.h, bottom: 5.h),
+              child: Text(LocaleKeys.Add_Testimonial.tr(),
+                  style:
+                  TextStyle(color: themenofier.isdark
+                      ? Colors.white
+                      : color.primarycolor,fontSize: 17.sp, fontFamily: 'Poppins_semibold')),
+            ),
+            RatingBar.builder(
+              initialRating: 1,
+              minRating: 1,
+              direction: Axis.horizontal,
+              itemCount: 5,
+              itemSize: 60,
+              itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+              itemBuilder: (context, _) => Icon(
+                Icons.star,
+                color: color.yellow,
               ),
-              height: 6.5.h,
-              width: 47.w,
-              child: TextButton(
-                child: Text(
-                  LocaleKeys.Cancel.tr(),
-                  style: TextStyle(
-                      fontFamily: 'Poppins_medium',
-                      color: color.red,
-                      fontSize: fontsize.Buttonfontsize),
+              onRatingUpdate: (Value) {
+                setState(() {
+                  rating = Value.toInt();
+                });
+              },
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Form(
+              key: _formkey,
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: 0.8.h,
+                  left: 3.5.w,
+                  right: 3.5.w,
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+                decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                child: TextFormField(
+                  controller: Comment,
+                  maxLines: 10,
+                  cursorColor: Colors.grey,
+                  textAlignVertical: TextAlignVertical.top,
+                  decoration: InputDecoration(
+                      hintText: LocaleKeys.Enteryoureview.tr(),
+                      hintStyle:
+                      TextStyle(fontSize: 11.sp, fontFamily: "Poppins"),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:  BorderSide(color:color.primarycolor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:  BorderSide(color:color.primarycolor),
+                      )),
+                ),
               ),
             ),
-            Container(
-              // margin: EdgeInsets.only(
-              //   right: 1.6.w,
-              //   left: 1.6.w,
-              //   bottom: 1.5.h,
-              // ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              height: 6.5.h,
-              width: 47.w,
-              child: TextButton(
-                onPressed: () {
-                  if (Comment.text.isEmpty) {
-                    loader.showErroDialog(
-                      description: LocaleKeys.Please_enter_all_details.tr(),
-                    );
-                  } else {
-                    addraring();
-                  }
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: color.black,
-                ),
-                child: Text(
-                  LocaleKeys.Submit.tr(),
-                  style: TextStyle(
-                      fontFamily: 'Poppins_medium',
-                      color: Colors.white,
-                      fontSize: fontsize.Buttonfontsize),
-                ),
-              ),
-            ),
+            Spacer(),
+            SizedBox(
+              height: 15,
+            )
           ],
-        ),
-      ),
+        );
+      },),
+      bottomSheet: Consumer(builder: (context, ThemeModel themenofier, child) {
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 1.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                // margin: EdgeInsets.only(
+                //   left: 1.6.w,
+                //   right: 1.6.w,
+                //   bottom: 1.5.h,
+                // ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(
+                    color: color.red,
+                  ),
+                ),
+                height: 6.5.h,
+                width: 47.w,
+                child: TextButton(
+                  child: Text(
+                    LocaleKeys.Cancel.tr(),
+                    style: TextStyle(
+                        fontFamily: 'Poppins_medium',
+                        color: color.red,
+                        fontSize: fontsize.Buttonfontsize),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              Container(
+                // margin: EdgeInsets.only(
+                //   right: 1.6.w,
+                //   left: 1.6.w,
+                //   bottom: 1.5.h,
+                // ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                height: 6.5.h,
+                width: 47.w,
+                child: TextButton(
+                  onPressed: () {
+                    if (Comment.text.isEmpty) {
+                      loader.showErroDialog(
+                        description: LocaleKeys.Please_enter_all_details.tr(),
+                      );
+                    } else {
+                      addraring();
+                    }
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor:themenofier.isdark
+                        ? Colors.white
+                        : color.primarycolor,
+                  ),
+                  child: Text(
+                    LocaleKeys.Submit.tr(),
+                    style: TextStyle(
+                        fontFamily: 'Poppins_medium',
+                        color: Colors.white,
+                        fontSize: fontsize.Buttonfontsize),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },),
     ));
   }
 }

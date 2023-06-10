@@ -13,6 +13,7 @@ class MyThemes {
         ),
       ),
     ),
+    primarySwatch:kPrimaryColor,
     primaryColor: Color(0xff0D9444),
     iconTheme: IconThemeData(color: Colors.white),
     appBarTheme: AppBarTheme(
@@ -53,7 +54,21 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.black,
     brightness: Brightness.dark,
   );
-
+   static final MaterialColor kPrimaryColor =  MaterialColor(
+     0xff1A86F0,
+     <int, Color>{
+      50:  color.primarycolor,
+      100: color.primarycolor,
+      200: color.primarycolor,
+      300: color.primarycolor,
+      400: color.primarycolor,
+      500: color.primarycolor,
+      600: color.primarycolor,
+      700: color.primarycolor,
+      800: color.primarycolor,
+      900: color.primarycolor,
+    },
+  );
   static final LightTheme = ThemeData(
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
@@ -63,7 +78,7 @@ class MyThemes {
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.white),
-    // primarySwatch: Colors.red,
+    primarySwatch:kPrimaryColor,
     primaryColor:color.primarycolor,
     primaryColorDark: color.black,
     appBarTheme: const AppBarTheme(
@@ -84,7 +99,7 @@ class MyThemes {
       unselectedItemColor: Colors.black12,
     ),
     scaffoldBackgroundColor: Colors.white,
-    // primarySwatch: Colors.grey,
+
     colorScheme: const ColorScheme.light(),
   );
 }

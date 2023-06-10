@@ -69,7 +69,8 @@ dependencies:
   flutter_rating_bar:
   firebase_auth:
   cc_avenue:
-
+#  flutter_google_places:
+  google_places_flutter:
 
 dependency_overrides:
   intl: ^0.17.0-nullsafety.2

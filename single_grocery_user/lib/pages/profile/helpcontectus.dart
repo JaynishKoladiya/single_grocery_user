@@ -123,7 +123,7 @@ class _HelpcontactusState extends State<Helpcontactus> {
                                   right: 2.w,
                                 ),
                                 child: Text(
-                                  LocaleKeys.No91_70164.tr(),
+                                  "+91 9640833349",
                                   style: TextStyle(
                                       fontFamily: 'Poppins', fontSize: 9.5.sp,
                                     color: themenofier.isdark ? Colors.white : color.black,
@@ -151,7 +151,7 @@ class _HelpcontactusState extends State<Helpcontactus> {
                                   right: 2.w,
                                 ),
                                 child: Text(
-                                  LocaleKeys.Infotechgravitygmail.tr(),
+                                  "gmdpl.atp@gmail.com",
                                   style: TextStyle(
                                       fontFamily: 'Poppins', fontSize: 9.5.sp,
                                     color: themenofier.isdark ? Colors.white : color.black,
@@ -179,8 +179,8 @@ class _HelpcontactusState extends State<Helpcontactus> {
                                       right: 2.w,
                                     ),
                                     child: Text(
-                                      maxLines: 3,
-                                      LocaleKeys.Company_address.tr(),
+                                      maxLines: 4,
+                                      "M/s Gayathri Milk Dairy Pvt Ltd. \n Sy No: 126/7, Alamur Road, Rudrampet,\n Ananthapuramu,\n Andhra Pradesh - 515001",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
@@ -236,9 +236,10 @@ class _HelpcontactusState extends State<Helpcontactus> {
                                             color: themenofier.isdark ? Colors.white : color.primarycolor,
                                           ),
                                         ),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.black),
+                                        focusedBorder:  OutlineInputBorder(
+                                          borderSide:  BorderSide(
+                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
+                                          )
                                         )),
                                   ),
                                 ),
@@ -267,9 +268,10 @@ class _HelpcontactusState extends State<Helpcontactus> {
                                             color: themenofier.isdark ? Colors.white : color.primarycolor,
                                           ),
                                         ),
-                                        focusedBorder: const OutlineInputBorder(
+                                        focusedBorder:  OutlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: Colors.black),
+                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
+                                          )
                                         )),
                                   ),
                                 ),
