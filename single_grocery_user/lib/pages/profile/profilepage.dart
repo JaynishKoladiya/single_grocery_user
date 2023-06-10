@@ -87,9 +87,7 @@ class _ProfilepageState extends State<Profilepage> {
                   height: 23.h,
                   width: MediaQuery.of(context).size.width,
                   // color: themenofier.isdark ? Colors.white : color.black,
-                  color: themenofier.isdark
-                      ? Colors.white
-                      : color.primarycolor,
+                  color: themenofier.isdark ? Colors.white : color.primarycolor,
                   child: Column(
                     children: [
                       Row(
@@ -147,7 +145,7 @@ class _ProfilepageState extends State<Profilepage> {
                                     ),
                                   ))),
                           Padding(padding: EdgeInsets.only(right: 4.8.w)),
-                         // Image.asset("Icons/logo-white.png",height: 20.h,width: 50.w,),
+                          // Image.asset("Icons/logo-white.png",height: 20.h,width: 50.w,),
                         ],
                       ),
                       Row(
@@ -726,7 +724,9 @@ class _ProfilepageState extends State<Profilepage> {
                                 SvgPicture.asset(
                                   'svgicon/Changelayout.svg',
                                   height: height.settingiconheight,
-
+                                  color: themenofier.isdark
+                                      ? Colors.white
+                                      : color.black,
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
@@ -753,7 +753,7 @@ class _ProfilepageState extends State<Profilepage> {
                           height: 0.8.sp,
                           width: MediaQuery.of(context).size.width,
                           color:
-                          themenofier.isdark ? Colors.white : Colors.grey,
+                              themenofier.isdark ? Colors.white : Colors.grey,
                         ),
                         InkWell(
                           onTap: () {
@@ -1269,7 +1269,8 @@ class _ProfilepageState extends State<Profilepage> {
                         style: TextStyle(
                             fontSize: 11.5.sp,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins',color: Colors.grey)),
+                            fontFamily: 'Poppins',
+                            color: Colors.grey)),
                   ),
                   Container(
                     height: 0.8.sp,
