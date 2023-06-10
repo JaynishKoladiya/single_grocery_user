@@ -207,7 +207,7 @@ class _Add_addressState extends State<Add_address> {
                                         labelText: LocaleKeys.Search.tr(),
                                         labelStyle: TextStyle(color: color.primarycolor),
                                         floatingLabelStyle: TextStyle(color: color.primarycolor),
-                                        // prefixIconColor: color.primarycolor,
+                                        prefixIconColor: color.primarycolor,
                                         // prefix: Icon(Icons.ac_unit)
                                       ),
                                       onDone: (e) async {
