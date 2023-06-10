@@ -172,9 +172,9 @@ class categories_itemsState extends State<categories_items> {
                     title: Text(
                       widget.title!,
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 15.sp,
                         fontFamily: 'Poppins_semibold',
-
+                        color: themenofier.isdark?Colors.white:color.primarycolor
                       ),
                     ),
                     bottom: TabBar(
@@ -222,7 +222,8 @@ class categories_itemsState extends State<categories_items> {
                                 .items![_index].subcategoryItems!.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 0.65,
+                                    childAspectRatio: 0.81,
+                                    // childAspectRatio: 0.65,
                                     crossAxisSpacing: 10,
                                     crossAxisCount: 2),
                             padding: EdgeInsets.only(
@@ -230,6 +231,7 @@ class categories_itemsState extends State<categories_items> {
                                 right: MediaQuery.of(context).size.width / 33),
                             itemBuilder: (context, index) {
                               return Container(
+                                padding: EdgeInsets.only(top: 5,bottom: 3),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(7),
                                       border: Border.all(
@@ -254,11 +256,13 @@ class categories_itemsState extends State<categories_items> {
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                2.3,
+                                                4.0,
+                                                // 2.3,
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                2.2,
+                                                2.7,
+                                                // 2.2,
                                             child: ClipRRect(
                                               borderRadius:
                                                   const BorderRadius.only(
@@ -321,7 +325,8 @@ class categories_itemsState extends State<categories_items> {
                                           ],
                                           Positioned(
                                               top: 5.0,
-                                              right: 5.0,
+                                              right: -14.0,
+                                              // right: 5.0,
                                               child: InkWell(
                                                 onTap: () {
                                                   if (userid == "") {
@@ -374,13 +379,13 @@ class categories_itemsState extends State<categories_items> {
                                                                 .size
                                                                 .height /
                                                             80),
-                                                    decoration: BoxDecoration(
-                                                      // shape: BoxShape.values,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                      color: Colors.black26,
-                                                    ),
+                                                    // decoration: BoxDecoration(
+                                                    //   // shape: BoxShape.values,
+                                                    //   borderRadius:
+                                                    //       BorderRadius.circular(
+                                                    //           12),
+                                                    //   color: Colors.black26,
+                                                    // ),
                                                     child: categoriesdata!
                                                                 .items![_index]
                                                                 .subcategoryItems![
@@ -389,11 +394,11 @@ class categories_itemsState extends State<categories_items> {
                                                             "0"
                                                         ? SvgPicture.asset(
                                                             'Icons/Favorite.svg',
-                                                            color: Colors.white,
+                                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                           )
                                                         : SvgPicture.asset(
                                                             'Icons/Favoritedark.svg',
-                                                            color: Colors.white,
+                                                            color: themenofier.isdark ? Colors.white : color.primarycolor,
                                                           )),
                                               )),
                                         ],
@@ -501,6 +506,7 @@ class categories_itemsState extends State<categories_items> {
                                                 style: TextStyle(
                                                   fontSize: 10.sp,
                                                   fontFamily: 'Poppins_bold',
+                                                  color: themenofier.isdark ? Colors.white : color.primarycolor
                                                 ),
                                               ),
                                             ] else ...[
@@ -511,6 +517,7 @@ class categories_itemsState extends State<categories_items> {
                                                 style: TextStyle(
                                                   fontSize: 10.sp,
                                                   fontFamily: 'Poppins_bold',
+                                                    color: themenofier.isdark ? Colors.white : color.primarycolor
                                                 ),
                                               ),
                                             ],
@@ -527,30 +534,30 @@ class categories_itemsState extends State<categories_items> {
                                                         .availableQty
                                                         .toString()) <=
                                                     0) ...[
-                                              InkWell(
-                                                onTap: () {},
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                      border: Border.all(
-                                                          color: Colors.grey)),
-                                                  height: 3.5.h,
-                                                  width: 17.w,
-                                                  child: Center(
-                                                    child: Text(
-                                                      LocaleKeys.ADD.tr(),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 9.5.sp,
-                                                          color: themenofier.isdark
-                                                              ? Colors.white
-                                                              : color.primarycolor),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                              // InkWell(
+                                              //   onTap: () {},
+                                              //   child: Container(
+                                              //     decoration: BoxDecoration(
+                                              //         borderRadius:
+                                              //             BorderRadius.circular(
+                                              //                 4),
+                                              //         border: Border.all(
+                                              //             color: Colors.grey)),
+                                              //     height: 3.5.h,
+                                              //     width: 17.w,
+                                              //     child: Center(
+                                              //       child: Text(
+                                              //         LocaleKeys.ADD.tr(),
+                                              //         style: TextStyle(
+                                              //             fontFamily: 'Poppins',
+                                              //             fontSize: 9.5.sp,
+                                              //             color: themenofier.isdark
+                                              //                 ? Colors.white
+                                              //                 : color.primarycolor),
+                                              //       ),
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ] else if (categoriesdata!
                                                     .items![_index]
                                                     .subcategoryItems![index]
@@ -819,6 +826,33 @@ class categories_itemsState extends State<categories_items> {
                                               ),
                                             ],
                                           ],
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  4),
+                                              border: Border.all(
+                                                  color: themenofier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor)),
+                                          height: 3.5.h,
+                                          margin: EdgeInsets.only(top: 5,left: 10,right: 10),
+                                          width: double.infinity,
+                                          child: Center(
+                                            child: Text(
+                                              LocaleKeys.ADD.tr(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 9.5.sp,
+                                                  color: themenofier.isdark
+                                                      ? Colors.white
+                                                      : color.primarycolor),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Padding(
