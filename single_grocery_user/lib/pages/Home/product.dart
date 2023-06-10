@@ -310,7 +310,9 @@ class _ProductState extends State<Product> {
                                   // color: Colors.white,
                                 )
                                     : SvgPicture.asset(
-                                  'Icons/Favoritedark.svg',
+                                  'Icons/Favoritedark.svg',color: themenofier.isdark
+                                    ? Colors.white
+                                    : color.primarycolor
                                   // color: Colors.white,
                                 ),
                               ),

@@ -515,8 +515,8 @@ class _HomescreenState extends State<Homescreen> {
                                                   .topbanners![index].type ==
                                               "1") {
                                             Get.to(() => categories_items(
-                                                  homedata!.banners!
-                                                      .topbanners![index].catId.toString(),
+                                                  "${homedata!.banners!
+                                                      .topbanners![index].catId}",
                                                   homedata!
                                                       .banners!
                                                       .topbanners![index]
