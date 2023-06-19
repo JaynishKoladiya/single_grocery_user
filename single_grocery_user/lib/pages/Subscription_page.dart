@@ -79,7 +79,7 @@ class _Subscription_pageState extends State<Subscription_page> {
       var response = await Dio().get(DefaultApi.appUrl + PostAPI.subscriptionDetails);
       issubscriptiondetail = false;
       SubscriptionTypemodel = sub.SubscriptionType.fromJson(response.data);
-      print("${response.data}");
+      print("subscriptionAPI===${response.data}");
       select.listdata.value=SubscriptionTypemodel!.data!;
       select.status.value=SubscriptionTypemodel!.status!;
       // log("Hiiii${itemdata}");
@@ -231,6 +231,7 @@ class _Subscription_pageState extends State<Subscription_page> {
       rethrow;
     }
   }
+
   List<String> days = ["SU","M","TU","W","T","F","S"];
   DateRangePickerController _datePickerController = DateRangePickerController();
   @override

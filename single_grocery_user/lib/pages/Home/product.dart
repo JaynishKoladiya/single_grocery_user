@@ -1659,52 +1659,105 @@ class _ProductState extends State<Product> {
                           ],
                         ),
 
-                        bottomSheet: InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return Subscription_page(
-                                    itemdata!.data!.id,
-                                    itemdata!.data!.itemName,
-                                    itemdata!.data!.itemImages![0].imageUrl
-                                        .toString(),
-                                    itemdata!.data!.categoryInfo!.categoryName!,
-                                    itemdata!.data!.tax,
-                                    select.price.value,
-                                    itemdata!.data!.variation![select
-                                        .variationselecationindex.value]
-                                        .availableQty,
-                                    itemdata!.data!.variation![select
-                                        .variationselecationindex.value]
-                                        .variation,
-                                    widget.item
-                                );
-                              },));
-                          },
-                          child: Container(
-                              color: themenofier.isdark
-                                  ? Colors.white
-                                  : color.primarycolor,
-                              height: 7.h,
-                              width: double.infinity,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.ac_unit, color: themenofier.isdark
-                                      ? Colors.black
-                                      : color.white),
-                                  Text("Subscribe Now", style: TextStyle(
-                                      color: themenofier.isdark
-                                          ? Colors.black
-                                          : color.white, fontSize: 16),)
-                                ],
-                              )),
+                        bottomSheet: Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  arr_addonsid.clear();
+                                  arr_addonsname.clear();
+                                  arr_addonsprice.clear();
+                                  for (int i = 0;
+                                  i < itemdata!.data!.addons!.length;
+                                  i++) {
+                                    if (itemdata!.data!.addons![i].isselected ==
+                                        true) {
+                                      arr_addonsid.add(
+                                          itemdata!.data!.addons![i].id.toString());
+                                      arr_addonsname.add(
+                                          itemdata!.data!.addons![i].name.toString());
+                                      arr_addonsprice.add(numberFormat.format(
+                                          double.parse(itemdata!
+                                              .data!.addons![i].price
+                                              .toString())));
+                                    }
+                                  }
+                                  // add_to_cartAPI();
+
+                                },
+                                child: Container(
+                                  color: themenofier.isdark
+                                      ? Colors.white
+                                      : color.primarycolor,
+                                  height: 7.0.h,
+                                  width: 47.w,
+                                    child: Center(
+                                      child: Text(
+                                        LocaleKeys.Add_to_cart.tr(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins_medium',
+                                          color: themenofier.isdark
+                                              ? Colors.black
+                                              : color.white,
+                                          fontSize: 13.sp,
+                                        ),
+                                      ),
+                                    ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 1.w),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return Subscription_page(
+                                          itemdata!.data!.id,
+                                          itemdata!.data!.itemName,
+                                          itemdata!.data!.itemImages![0].imageUrl
+                                              .toString(),
+                                          itemdata!.data!.categoryInfo!.categoryName!,
+                                          itemdata!.data!.tax,
+                                          select.price.value,
+                                          itemdata!.data!.variation![select
+                                              .variationselecationindex.value]
+                                              .availableQty,
+                                          itemdata!.data!.variation![select
+                                              .variationselecationindex.value]
+                                              .variation,
+                                          widget.item
+                                      );
+                                    },));
+                                },
+                                child: Container(
+                                    color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,
+                                    height: 7.h,
+                                    width: double.infinity,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.ac_unit, color: themenofier.isdark
+                                            ? Colors.black
+                                            : color.white),
+                                        Text("Subscribe Now", style: TextStyle(
+                                            color: themenofier.isdark
+                                                ? Colors.black
+                                                : color.white, fontSize: 16),)
+                                      ],
+                                    )),
+                              ),
+                            )
+                          ],
                         )
                     );
                   }
                 },
               ));
         });
+
   }
 }
 /*
