@@ -51,8 +51,10 @@ dependencies:
   flutter_phone_direct_caller:
   url_launcher:
   connectivity_plus:
+
   firebase_messaging:
   firebase_core :
+  firebase_auth:
   flutter_local_notifications:
   flutter_phoenix:
   fluttertoast:
@@ -67,7 +69,6 @@ dependencies:
   razorpay_flutter:
   syncfusion_flutter_datepicker:
   flutter_rating_bar:
-  firebase_auth:
   cc_avenue:
 #  flutter_google_places:
   google_places_flutter:

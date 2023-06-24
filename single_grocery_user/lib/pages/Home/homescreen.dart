@@ -491,8 +491,7 @@ class _HomescreenState extends State<Homescreen> {
                                 width: double.infinity,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      homedata!.banners!.topbanners!.length,
+                                  itemCount: homedata!.banners!.topbanners!.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       margin: EdgeInsets.only(
@@ -503,9 +502,7 @@ class _HomescreenState extends State<Homescreen> {
                                       width: 80.w,
                                       child: GestureDetector(
                                         onTap: () {
-                                          if (homedata!.banners!
-                                                  .topbanners![index].type ==
-                                              "2") {
+                                          if (homedata!.banners!.topbanners![index].type == "2") {
                                             Get.to(() => Product(int.parse(
                                                 homedata!
                                                     .banners!

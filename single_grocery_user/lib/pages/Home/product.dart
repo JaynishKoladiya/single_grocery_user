@@ -47,6 +47,8 @@ class buttoncontroller extends GetxController {
   RxString sub_str="Daily".obs;
   RxString selectday="".obs;
   RxString date="".obs;
+  RxString endDate="End To".obs;
+  RxString startDate="Start From".obs;
   RxString enddate="".obs;
   RxBool sub_status = false.obs;
   Rx<DateTime> tom_date=DateTime.now().obs;
@@ -650,8 +652,7 @@ class _ProductState extends State<Product> {
                                           fontFamily: 'Poppins_semibold'),
                                     ),
                                   ),
-                                  if (itemdata!.data!.itemDescription == "" ||
-                                      itemdata!.data!.itemDescription ==
+                                  if (itemdata!.data!.itemDescription == "" || itemdata!.data!.itemDescription ==
                                           null) ...[
                                     Container(
                                       margin:
@@ -1208,10 +1209,8 @@ class _ProductState extends State<Product> {
                                                                           .w600),
                                                                 ),
                                                                 Spacer(),
-                                                                if (itemdata!
-                                                                    .relateditems![index]
-                                                                    .itemType ==
-                                                                    "1") ...[
+                                                                if (itemdata!.relateditems![index].itemType == "1")
+                                                                  ...[
                                                                   SizedBox(
                                                                     height: 2.4
                                                                         .h,
@@ -1684,13 +1683,17 @@ class _ProductState extends State<Product> {
                                               .toString())));
                                     }
                                   }
-                                  // add_to_cartAPI();
+                                   add_to_cartAPI();
 
                                 },
                                 child: Container(
-                                  color: themenofier.isdark
-                                      ? Colors.white
-                                      : color.primarycolor,
+                                  margin: EdgeInsets.only(top:2.w ,bottom: 2.w,left: 3.w,right: 1.w),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    color: themenofier.isdark
+                                        ? Colors.white
+                                        : color.primarycolor,
+                                  ),
                                   height: 7.0.h,
                                   width: 47.w,
                                     child: Center(
@@ -1733,9 +1736,13 @@ class _ProductState extends State<Product> {
                                     },));
                                 },
                                 child: Container(
-                                    color: themenofier.isdark
-                                        ? Colors.white
-                                        : color.primarycolor,
+                                    margin: EdgeInsets.only(top:2.w ,bottom: 2.w,right: 3.w,left: 1.w),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: themenofier.isdark
+                                          ? Colors.white
+                                          : color.primarycolor,
+                                    ),
                                     height: 7.h,
                                     width: double.infinity,
                                     child: Row(
@@ -1759,7 +1766,74 @@ class _ProductState extends State<Product> {
                 },
               ));
         });
+  }
+  add_to_cartAPI() async {
 
+
+    print("quantity ${widget.item!.itemQty!}");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double addonstotalprice = 0;
+    for (int i = 0; i < arr_addonsprice.length; i++) {
+      addonstotalprice = addonstotalprice + double.parse(arr_addonsprice[i]);
+    }
+    try {
+      loader.showLoading();
+      var map = {
+        "user_id": userid,
+        "item_id": widget.itemid,
+        "item_name":widget.item!.itemName,
+        "item_image": widget.item!.imageName,
+        "item_type": widget.item!.itemType,
+        "tax": numberFormat.format(double.parse(widget.item!.tax!,)),
+        "item_price": widget.item!.hasVariation == "1"
+            ? numberFormat.format(double.parse(widget.item!.variation![
+        int.parse(select.variationselecationindex.toString())].productPrice!))
+            : numberFormat.format(double.parse(widget.item!.price!)),
+        "variation_id": widget.item!.hasVariation == "1" ? widget.item!.variation![
+        int.parse(select.variationselecationindex.toString())].id : "",
+        "variation": widget.item!.hasVariation == "1" ? widget.item!.variation![
+        int.parse(select.variationselecationindex.toString())].variation : "",
+        "addons_id": arr_addonsid.join(","),
+        "order_type": "normal",
+        "subscription_id": select.sub_id.value,
+        "start_date": select.date.value,
+        "end_date": select.enddate.value,
+        "custom_day":select.temp_day.value,
+        "custom_qty":select.temp_qty.value,
+        "order_type": "normal",
+        "addons_name": arr_addonsname.join(","),
+        "addons_price": arr_addonsprice.join(","),
+        "addons_total_price": numberFormat.format(addonstotalprice),
+        "quantity":widget.item!.itemQty!
+      };
+
+      // print("map:::>${map}");
+      var response = await Dio().post(DefaultApi.appUrl + PostAPI.Addtocart, data: map);
+      var finaldata = addtocartmodel.fromJson(response.data);
+      print("normal====>${response.data}");
+      loader.hideLoading();
+      if (finaldata.status == 1) {
+        prefs.setString(APPcart_count, finaldata.cartCount.toString());
+        count.cartcountnumber.value = (int.parse(prefs.getString(APPcart_count)!));
+        if (userid == "") {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (c) => Login()),
+                  (r) => false);
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Homepage(2),
+            ),
+          );
+        }
+
+      } else {
+        loader.showErroDialog(description: finaldata.message);
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }
 /*

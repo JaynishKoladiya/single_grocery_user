@@ -46,6 +46,8 @@ class Subscription_page extends StatefulWidget {
 }
 
 class _Subscription_pageState extends State<Subscription_page> {
+
+
   buttoncontroller select = getmethod.Get.put(buttoncontroller());
   bool? issubscriptiondetail = true;
   sub.SubscriptionType? SubscriptionTypemodel;
@@ -55,6 +57,13 @@ class _Subscription_pageState extends State<Subscription_page> {
   List<String> arr_addonsid = [];
   List<String> arr_addonsname = [];
   List<String> arr_addonsprice = [];
+
+  List<int> selectedDays=[];
+  DateTime? selectDate;
+  DateTime? _selectedDate;
+  DateTime? _selectedEndDate;
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -92,14 +101,7 @@ class _Subscription_pageState extends State<Subscription_page> {
   }
 
   addtocartmodel? addtocartdata;
-  addtocart(
-      itemid,
-      itemname,
-      itemimage,
-      itemtype,
-      itemtax,
-      itemprice,
-      ) async {
+  addtocart(itemid, itemname, itemimage, itemtype, itemtax, itemprice,) async {
     try {
 
       loader.showLoading();
@@ -189,16 +191,17 @@ class _Subscription_pageState extends State<Subscription_page> {
         "end_date": select.enddate.value,
         "custom_day":select.temp_day.value,
         "custom_qty":select.temp_qty.value,
+        "order_type": "subscription",
         "addons_name": arr_addonsname.join(","),
         "addons_price": arr_addonsprice.join(","),
         "addons_total_price": numberFormat.format(addonstotalprice),
         "quantity":widget.item!.itemQty!
       };
 
-       print("map:::====>${map}");
+       // print("map:::====>${map}");
       var response = await Dio().post(DefaultApi.appUrl + PostAPI.Addtocart, data: map);
       var finaldata = addtocartmodel.fromJson(response.data);
-      print("====>${response.data}");
+      print("sub====>${response.data}");
       loader.hideLoading();
       if (finaldata.status == 1) {
         prefs.setString(APPcart_count, finaldata.cartCount.toString());
@@ -234,6 +237,8 @@ class _Subscription_pageState extends State<Subscription_page> {
 
   List<String> days = ["SU","M","TU","W","T","F","S"];
   DateRangePickerController _datePickerController = DateRangePickerController();
+  String firstD='';
+  String lastD='';
   @override
   Widget build(BuildContext dialogContext) {
     return Consumer(
@@ -711,6 +716,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                         //      widget.itemType,
                                         //     widget.tax,
                                         //     select.price.value,widget.itemQty),));
+
                                       }
                                       if (e.subsType == "Alternate") {
                                         Container(
@@ -800,8 +806,7 @@ class _Subscription_pageState extends State<Subscription_page> {
                                             ],
                                           ),
                                         );
-                                        _datePickerController =
-                                            DateRangePickerController();
+                                        _datePickerController = DateRangePickerController();
                                         t = 0;
                                         showDialog(context: context,
                                           builder: (context) =>
@@ -904,61 +909,35 @@ class _Subscription_pageState extends State<Subscription_page> {
                                                             }
                                                           }
                                                         });
-                                                        _datePickerController
-                                                            .selectedDates =
-                                                            select
-                                                                .alter_dateTime
-                                                                .value;
-                                                        if (select
-                                                            .alter_dateTime
-                                                            .value.length !=
-                                                            0) {
-                                                          select.alter_dateTime
-                                                              .value.forEach((
-                                                              element) {
-                                                            if (!select
-                                                                .temp_dateTime
-                                                                .contains(
-                                                                "${element
-                                                                    .day}-${element
-                                                                    .month}-${element
-                                                                    .year}")) {
-                                                              select
-                                                                  .temp_dateTime
-                                                                  .add(
-                                                                  "${element
-                                                                      .day}-${element
-                                                                      .month}-${element
-                                                                      .year}");
+                                                        _datePickerController.selectedDates = select.alter_dateTime.value;
+                                                        if (select.alter_dateTime.value.length != 0) {
+                                                          select.alter_dateTime.value.forEach((element) {
+                                                            if (!select.temp_dateTime.contains(
+                                                                "${element.day}-${element.month}-${element.year}")) {
+                                                              select.temp_dateTime.add(
+                                                                  "${element.day}-${element.month}-${element.year}");
                                                             }
                                                           });
-                                                          select.temp_dateTime
-                                                              .refresh();
+                                                          select.temp_dateTime.refresh();
                                                         }
 
-                                                        print("temp=${select
-                                                            .temp_dateTime
-                                                            .value}");
-                                                        select.alter_dateTime
-                                                            .refresh();
-                                                        select.date.value =
-                                                            select.temp_dateTime
-                                                                .value.first;
-                                                        select.enddate.value =
-                                                            select.temp_dateTime
-                                                                .value.last;
-
+                                                        print("temp=${select.temp_dateTime.value}");
+                                                        select.alter_dateTime.refresh();
+                                                        // select.date.value = select.temp_dateTime.value.first;
+                                                        select.date.value = _datePickerController.selectedDates!.first.toString().substring(0,10);
+                                                        print("frist : ${select.date.value}");
+                                                        firstD = select.date.value;
+                                                        // select.enddate.value = select.temp_dateTime.value.last;
+                                                        select.enddate.value =  _datePickerController.selectedDates!.last.toString().substring(0,10);
+                                                        print("last : ${select.enddate.value}");
+                                                        lastD = select.enddate.value;
+                                                        setState(() {});
                                                         // t=select.alter_dateTime.value.length;
-                                                        print(
-                                                            "t===${_datePickerController
-                                                                .selectedDates}");
-                                                        Future.delayed(Duration(
-                                                            seconds: 1)).then((
-                                                            value) {
+                                                        print("t===${_datePickerController.selectedDates}");
+                                                        Future.delayed(Duration(seconds: 1)).then((value) {
                                                           if (t == 0) {
                                                             t = 1;
-                                                            Navigator.of(
-                                                                context).pop();
+                                                            Navigator.of(context).pop();
                                                           }
                                                         });
                                                       },
@@ -1212,314 +1191,546 @@ class _Subscription_pageState extends State<Subscription_page> {
 
                         // Add qun
                         if(select.sub_str.value == "One Time")...[
-                          Container(
-                          margin: EdgeInsets.only(
-                              left: 4.w, top: 4.h, bottom: 2.h),
-                          height: 3.6.h,
-                          width: 32.w,
-                          decoration:
-                          BoxDecoration(
-                            border: Border.all(
-                              color: themenofier.isdark
-                                  ? Colors.white
-                                  : color.primarycolor,),
-                            borderRadius:
-                            BorderRadius
-                                .circular(5),
-                            // color: Theme.of(context).accentColor
-                          ),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .spaceAround,
+                          Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    if (widget.item!.itemQty <= int.parse(
-                                        widget.item!.itemQty.toString())-1) {
-                                      loader
-                                          .showErroDialog(
-                                        description:
-                                        LocaleKeys
-                                            .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
-                                        ,
-                                      );
-                                    }
-                                    else {
-                                      setState(
-                                              () {
-                                            widget.item!
-                                                .itemQty = int.parse(
-                                                widget.item!.itemQty
-                                                    .toString()) -
-                                                1;
-                                          });
-                                    }
-                                  },
-                                  child: Icon(
-                                    Icons.remove,
-                                    color: themenofier.isdark
-                                        ? Colors.white
-                                        : color.primarycolor,
-                                    size: 18,
-                                  )),
+                              SizedBox(height: 4.h,),
+                              Padding(
+                                padding:  EdgeInsets.only(left: 4.w),
+                                child: Text("Item Qty :"),
+                              ),
                               Container(
-                                decoration:
-                                BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(
-                                      3),
-                                ),
-                                child: Text(
-                                  "${int.parse(
-                                      widget.item!.itemQty.toString()) +
-                                      1}",
-                                  style: TextStyle(
-                                    fontSize:
-                                    12.sp, color: themenofier.isdark
+                              margin: EdgeInsets.only(left: 4.w, top: 1.h, bottom: 2.h),
+                              height: 3.6.h,
+                              width: 32.w,
+                              decoration:
+                              BoxDecoration(
+                                border: Border.all(
+                                  color: themenofier.isdark
                                       ? Colors.white
                                       : color.primarycolor,),
-                                ),
+                                borderRadius: BorderRadius.circular(5),
+                                // color: Theme.of(context).accentColor
                               ),
-                              InkWell(
-                                  onTap:
-                                      () async {
-                                    setState(
-                                            () {
-                                          widget.item!.itemQty = int.parse(
-                                              widget.item!.itemQty.toString()) +
-                                              1;
-                                        });
-                                  },
-                                  child: Icon(
-                                    Icons.add,
-                                    color: themenofier.isdark
-                                        ? Colors.white
-                                        : color.primarycolor,
-                                    size: 18,
-                                  )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        if (widget.item!.itemQty <= int.parse(widget.item!.itemQty.toString())-1) {
+                                          loader.showErroDialog(description: LocaleKeys.The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item,
+                                          );
+                                        }
+                                        else {
+                                          setState(() {
+                                                widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) - 1;
+                                              });
+                                        }
+                                      },
+                                      child: Icon(
+                                        Icons.remove,
+                                        color: themenofier.isdark
+                                            ? Colors.white
+                                            : color.primarycolor,
+                                        size: 18,
+                                      )),
+                                  Container(
+                                    decoration:
+                                    BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius
+                                          .circular(
+                                          3),
+                                    ),
+                                    child: Text(
+                                      "${int.parse(widget.item!.itemQty.toString()) + 1}",
+                                      style: TextStyle(
+                                        fontSize:
+                                        12.sp, color: themenofier.isdark
+                                          ? Colors.white
+                                          : color.primarycolor,),
+                                    ),
+                                  ),
+                                  InkWell(
+                                      onTap: () async {
+                                        setState(() {
+                                              widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) + 1;
+                                            });
+                                      },
+                                      child: Icon(
+                                        Icons.add,
+                                        color: themenofier.isdark
+                                            ? Colors.white
+                                            : color.primarycolor,
+                                        size: 18,
+                                      )),
+                                ],
+                              ),
+                        ),
                             ],
                           ),
-                        ),
                         ],
                         if(select.sub_str.value == "Daily")...[
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 4.w, top: 4.h, bottom: 2.h),
-                            height: 3.6.h,
-                            width: 32.w,
-                            decoration:
-                            BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                  color.primarycolor),
-                              borderRadius:
-                              BorderRadius
-                                  .circular(5),
-                              // color: Theme.of(context).accentColor
-                            ),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment
-                                  .spaceAround,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      if (widget.item!.itemQty <= int.parse(
-                                          widget.item!.itemQty.toString())-1) {
-                                        loader
-                                            .showErroDialog(
-                                          description:
-                                          LocaleKeys
-                                              .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
-                                          ,
-                                        );
-                                      }
-                                      else {
-                                        setState(
-                                                () {
-                                              widget.item!
-                                                  .itemQty = int.parse(
-                                                  widget.item!.itemQty
-                                                      .toString()) -
-                                                  1;
-                                            });
-                                      }
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: color
-                                          .primarycolor,
-                                      size: 18,
-                                    )),
-                                Container(
-                                  decoration:
-                                  BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius
-                                        .circular(
-                                        3),
-                                  ),
-                                  child: Text(
-                                    "${int.parse(
-                                        widget.item!.itemQty.toString()) +
-                                        1}",
-                                    style: TextStyle(
-                                      fontSize:
-                                      10.sp, color: themenofier.isdark
+                          Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 4.h,),
+                              Padding(
+                                padding:  EdgeInsets.only(left: 4.w),
+                                child: Text("Item Qty :"),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 4.w, top: 1.h, bottom: 2.h),
+                                height: 3.6.h,
+                                width: 32.w,
+                                decoration:
+                                BoxDecoration(
+                                  border: Border.all(
+                                    color: themenofier.isdark
                                         ? Colors.white
                                         : color.primarycolor,),
-                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  // color: Theme.of(context).accentColor
                                 ),
-                                InkWell(
-                                    onTap:
-                                        () async {
-                                      setState(
-                                              () {
-                                            widget.item!.itemQty = int.parse(
-                                                widget.item!.itemQty.toString()) +
-                                                1;
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (widget.item!.itemQty <= int.parse(widget.item!.itemQty.toString())-1) {
+                                            loader.showErroDialog(description: LocaleKeys.The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item,
+                                            );
+                                          }
+                                          else {
+                                            setState(() {
+                                              widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) - 1;
+                                            });
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: themenofier.isdark
+                                              ? Colors.white
+                                              : color.primarycolor,
+                                          size: 18,
+                                        )),
+                                    Container(
+                                      decoration:
+                                      BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius
+                                            .circular(
+                                            3),
+                                      ),
+                                      child: Text(
+                                        "${int.parse(widget.item!.itemQty.toString()) + 1}",
+                                        style: TextStyle(
+                                          fontSize:
+                                          12.sp, color: themenofier.isdark
+                                            ? Colors.white
+                                            : color.primarycolor,),
+                                      ),
+                                    ),
+                                    InkWell(
+                                        onTap: () async {
+                                          setState(() {
+                                            widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) + 1;
                                           });
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      color: color
-                                          .primarycolor,
-                                      size: 18,
-                                    )),
-                              ],
-                            ),
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          color: themenofier.isdark
+                                              ? Colors.white
+                                              : color.primarycolor,
+                                          size: 18,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                         if(select.sub_str.value == "Alternate")...[
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 4.w, top: 4.h, bottom: 2.h),
-                            height: 3.6.h,
-                            width: 32.w,
-                            decoration:
-                            BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                  color.primarycolor),
-                              borderRadius:
-                              BorderRadius
-                                  .circular(5),
-                              // color: Theme.of(context).accentColor
-                            ),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment
-                                  .spaceAround,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      if (widget.item!.itemQty <= int.parse(
-                                          widget.item!.itemQty.toString())-1) {
-                                        loader
-                                            .showErroDialog(
-                                          description:
-                                          LocaleKeys
-                                              .The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item
-                                          ,
-                                        );
-                                      }
-                                      else {
-                                        setState(
-                                                () {
-                                              widget.item!
-                                                  .itemQty = int.parse(
-                                                  widget.item!.itemQty
-                                                      .toString()) -
-                                                  1;
-                                            });
-                                      }
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: color
-                                          .primarycolor,
-                                      size: 18,
-                                    )),
-                                Container(
-                                  decoration:
-                                  BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius
-                                        .circular(
-                                        3),
-                                  ),
-                                  child: Text(
-                                    "${int.parse(
-                                        widget.item!.itemQty.toString()) +
-                                        1}",
-                                    style: TextStyle(
-                                      fontSize:
-                                      10.sp, color: themenofier.isdark
+                          Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 4.h,),
+                              Padding(
+                                padding:  EdgeInsets.only(left: 4.w),
+                                child: Text("Item Qty :"),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 4.w, top: 1.h, bottom: 2.h),
+                                height: 3.6.h,
+                                width: 32.w,
+                                decoration:
+                                BoxDecoration(
+                                  border: Border.all(
+                                    color: themenofier.isdark
                                         ? Colors.white
                                         : color.primarycolor,),
-                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  // color: Theme.of(context).accentColor
                                 ),
-                                InkWell(
-                                    onTap:
-                                        () async {
-                                      setState(
-                                              () {
-                                            widget.item!.itemQty = int.parse(
-                                                widget.item!.itemQty.toString()) +
-                                                1;
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (widget.item!.itemQty <= int.parse(widget.item!.itemQty.toString())-1) {
+                                            loader.showErroDialog(description: LocaleKeys.The_item_has_multtiple_customizations_added_Go_to_cart__to_remove_item,
+                                            );
+                                          }
+                                          else {
+                                            setState(() {
+                                              widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) - 1;
+                                            });
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: themenofier.isdark
+                                              ? Colors.white
+                                              : color.primarycolor,
+                                          size: 18,
+                                        )),
+                                    Container(
+                                      decoration:
+                                      BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius
+                                            .circular(
+                                            3),
+                                      ),
+                                      child: Text(
+                                        "${int.parse(widget.item!.itemQty.toString()) + 1}",
+                                        style: TextStyle(
+                                          fontSize:
+                                          12.sp, color: themenofier.isdark
+                                            ? Colors.white
+                                            : color.primarycolor,),
+                                      ),
+                                    ),
+                                    InkWell(
+                                        onTap: () async {
+                                          setState(() {
+                                            widget.item!.itemQty = int.parse(widget.item!.itemQty.toString()) + 1;
                                           });
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      color: color
-                                          .primarycolor,
-                                      size: 18,
-                                    )),
-                              ],
-                            ),
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          color: themenofier.isdark
+                                              ? Colors.white
+                                              : color.primarycolor,
+                                          size: 18,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
+
 
                         // Start Date
                         if(select.sub_str.value == "One Time")...[
                           Container(
-                            margin: EdgeInsets.only(left: 4.w,
-                                top: 3.h,
-                                bottom: 2.h),
+                            margin: EdgeInsets.only(left: 4.w, top: 2.h, bottom: 2.h),
                             child: Obx(() =>
-                                Text("Start Date : ${select.date.value}")),
+                                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                  Text("Start Date : "),
+                                    Container(
+                                        height: 4.h,
+                                        width: 32.w,alignment: Alignment.center,
+                                        margin: EdgeInsets.symmetric(vertical: 3,),
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                          border: Border.all(color: color.primarycolor)
+                                        ),
+                                        child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(" ${select.date.value}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                            Icon(Icons.calendar_month,color: color.primarycolor,size: 22,)
+                                          ],
+                                        )),
+                                  ],
+                                )),
                           ),
                         ],
                         if(select.sub_str.value == "Daily")...[
+                          /*Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      height: 50,
+                                      width: double.infinity,alignment: Alignment.center,
+                                      margin: EdgeInsets.symmetric(vertical: 5),
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Text("Start Date: ${select.date.value}",style: TextStyle(fontWeight: FontWeight.w400),)
+                                  ),
+                                ),
+                              ),
+                              Text("To"),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      height: 50,alignment: Alignment.center,
+                                      width: double.infinity,
+                                      margin: EdgeInsets.symmetric(vertical: 5),padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Text("End Date:  ${select.enddate.value}",style: TextStyle(fontWeight: FontWeight.w400),)
+
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),*/
                           Container(
-                            margin: EdgeInsets.only(left: 4.w,
-                                top: 3.h,
-                                bottom: 2.h),
-                            child: Obx(() => Text("Start Date: ${select.date
-                                .value} to End Date:  ${select.enddate
-                                .value}")),
+                            margin: EdgeInsets.only(left: 4.w, top: 3.h, bottom: 2.h,right: 4.w),
+                            child: Obx(() =>
+                              Padding(
+                                padding:  EdgeInsets.only(),
+                                child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Start Date:",),
+                                        Container(
+                                            height: 4.h,
+                                            width: 32.w,alignment: Alignment.center,
+                                            margin: EdgeInsets.symmetric(vertical: 3,),
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(color: color.primarycolor)
+                                            ),
+                                            child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(" ${select.date.value}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                                Icon(Icons.calendar_month,color: color.primarycolor,size: 22,)
+                                              ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.symmetric(horizontal : 5.w,vertical: 1.h),
+                                      child: Text("To"),
+                                    ),
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("End Date",),
+                                        Container(
+                                            height: 4.h,
+                                            width: 32.w,alignment: Alignment.center,
+                                            margin: EdgeInsets.symmetric(vertical: 3,),
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(color: color.primarycolor)
+                                            ),
+                                            child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(" ${select.enddate.value}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                                Icon(Icons.calendar_month,color: color.primarycolor,size: 22,)
+                                              ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                             ),
                           ),
                         ],
                         if(select.sub_str.value == "Alternate") ...[
-                            Container(
-                              margin: EdgeInsets.only(left: 4.w,
-                                  top: 3.h,
-                                  bottom: 2.h),
-                              child: Obx(() => Text("Start Date: ${select.date
-                                  .value} to End Date:  ${select.enddate
-                                  .value}")),
+                         /* Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      height: 50,
+                                      width: double.infinity,alignment: Alignment.center,
+                                      margin: EdgeInsets.symmetric(vertical: 5),
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Text("Start Date: ${select.date.value}",style: TextStyle(fontWeight: FontWeight.w400),)
+                                  ),
+                                ),
+                              ),
+                              Text("To"),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      height: 50,alignment: Alignment.center,
+                                      width: double.infinity,
+                                      margin: EdgeInsets.symmetric(vertical: 5),padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Text("End Date:  ${select.enddate.value}",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 14),)
+
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),*/
+                          Padding(
+                            padding:  EdgeInsets.only(left: 4.w, top: 2.h, bottom: 2.h,right: 4.w),
+                            child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Start Date:",),
+                                    Container(
+                                        height: 4.h,
+                                        width: 34.w,alignment: Alignment.center,
+                                        margin: EdgeInsets.symmetric(vertical: 3,),
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            border: Border.all(color: color.primarycolor)
+                                        ),
+                                      child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(" ${firstD}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                          // Text(" ${select.date.value}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                          Icon(Icons.calendar_month,color: color.primarycolor,size: 22,)
+                                        ],
+                                      )
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:  EdgeInsets.symmetric(horizontal : 5.w,vertical: 1.h),
+                                  child: Text("To"),
+                                ),
+                                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("End Date:",),
+                                    Container(
+                                        height: 4.h,
+                                        width: 34.w,alignment: Alignment.center,
+                                        margin: EdgeInsets.symmetric(vertical: 3,),
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            border: Border.all(color: color.primarycolor)
+                                        ),
+                                        child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(" ${lastD}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                            // Text(" ${select.enddate.value}",style: TextStyle(fontWeight: FontWeight.w400),),
+                                            Icon(Icons.calendar_month,color: color.primarycolor,size: 22,)
+                                          ],
+                                        )
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
+                          ),
                           ],
                         SizedBox(height: 2.h,),
                         getmethod.Obx(() =>
                             Visibility(
-                              visible: select.sub_str.value == "Weekly"
-                                  ? true
-                                  : false,
+                              visible: select.sub_str.value == "Weekly" ? true : false,
                               child: Column(
                                 children: [
+                                  Padding(
+                                    padding:  EdgeInsets.only(left: 4.w, top: 2.h, bottom: 2.h,right: 4.w),
+                                    child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Start From:"),
+                                            Container(
+                                              height: 4.2.h,
+                                              width: 34.w,alignment: Alignment.center,
+                                              margin: EdgeInsets.symmetric(vertical: 3,),
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(5),
+                                                  border: Border.all(color: color.primarycolor)
+                                              ),
+                                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Obx(() =>
+                                                      Text(" ${select.startDate.value}",style: TextStyle(fontWeight: FontWeight.w400),)),
+                                                  // IconButton(onPressed: () {
+                                                  //   _selectDate(context);
+                                                  // }, icon: Icon(Icons.calendar_month,color: color.primarycolor,))
+                                                  InkWell(onTap: () {
+                                                    _selectDate(context);
+                                                  },child: Icon(Icons.calendar_month,color: color.primarycolor,))
+                                                ],
+                                              )
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:  EdgeInsets.symmetric(horizontal : 5.w,vertical: 1.h),
+                                          child: Text("To"),
+                                        ),
+                                        Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("End Date:"),
+                                            Container(
+                                                height: 4.2.h,
+                                                width: 34.w,alignment: Alignment.center,
+                                                margin: EdgeInsets.symmetric(vertical: 3,),
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    border: Border.all(color: color.primarycolor)
+                                                ),
+                                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Obx(() =>
+                                                        Text(" ${select.endDate.value}",style: TextStyle(fontWeight: FontWeight.w400),)),
+                                                    // IconButton(onPressed: () {
+                                                    //   _selectDate1(context);
+                                                    // }, icon: Icon(Icons.calendar_month,color: color.primarycolor,))
+                                                    InkWell(onTap: () {
+                                                      _selectDate1(context);
+                                                    },child: Icon(Icons.calendar_month,color: color.primarycolor,))
+                                                  ],
+                                                )
+                                              /*TextField(
+                                          controller: _endDateController,
+                                          readOnly: true,
+                                          onTap: () {
+                                            _selectDate(context,1);
+                                          },
+                                          decoration: InputDecoration(
+                                            // labelText: 'End To',
+                                            border: InputBorder.none,
+                                            hintText: 'End To',
+                                            suffixIcon: Icon(Icons.calendar_today,color: color.primarycolor,),
+                                          ),
+                                        ),*/
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   Container(
                                     margin: EdgeInsets.only(
                                       left: 4.w,
@@ -1545,32 +1756,30 @@ class _Subscription_pageState extends State<Subscription_page> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
+
+                                          if(days[index]=="SU")
+                                          {
+                                            _toggleSelectedDay(7);
+                                          }
+                                          else
+                                          {
+                                            _toggleSelectedDay(index);
+                                          }
+
                                           select.selectday.value = days[index];
-                                          select.selectdayvisible.value[index] =
-                                          !select.selectdayvisible.value[index];
-                                          Map m = {
-                                            select.daylist.value[index]: 1
-                                          };
-                                          if (select.selectdayvisible
-                                              .value[index]) {
-                                            select.total.value =
-                                                select.total.value +
-                                                    double.parse(widget.price
-                                                        .toString());
+                                          select.selectdayvisible.value[index] = !select.selectdayvisible.value[index];
+                                          Map m = {select.daylist.value[index]: 1};
+                                          print("mm: ${m}");
+                                          if (select.selectdayvisible.value[index]) {
+                                            select.total.value = select.total.value + double.parse(widget.price.toString());
                                             select.day_qty.value.add(m);
                                           }
                                           else {
-                                            select.total.value =
-                                                select.total.value -
-                                                    (select.counts[index] *
-                                                        double.parse(
-                                                            widget.price
-                                                                .toString()));
+                                            select.total.value = select.total.value -
+                                                    (select.counts[index] * double.parse(widget.price.toString()));
                                             select.counts[index] = 1;
                                             print(select.daylist.value[index]);
-                                            select.day_qty.value.removeWhere((
-                                                element) => element.containsKey(
-                                                select.daylist.value[index]));
+                                            select.day_qty.value.removeWhere((element) => element.containsKey(select.daylist.value[index]));
                                             select.day_qty.refresh();
                                           }
                                           select.temp_qty.value = [];
@@ -1584,25 +1793,29 @@ class _Subscription_pageState extends State<Subscription_page> {
                                           select.temp_day.refresh();
                                           select.temp_qty.refresh();
                                           select.day_qty.refresh();
-                                          print("daylist===>${select.day_qty
-                                              .value}");
-                                          print("daylist===>${select.temp_day
-                                              .value}");
-                                          print("daylist===>${select.temp_qty
-                                              .value}");
-
+                                          print("daylist===>${select.day_qty.value}");
+                                          print("daylist===>${select.temp_day.value}");
+                                          print("daylist===>${select.temp_qty.value}");
                                           select.selectdayvisible.refresh();
+
+                                       /*   _toggleSelectedDay(select.temp_day.value[index]);
+                                          String ddd = select.temp_day.value.join(",");
+                                          print(ddd);
+                                          if(select.temp_day.value.contains("Sunday"))
+                                            {
+                                              print("Sunday.. ${DateTime.sunday}");
+                                            }
+                                           if(select.temp_day.value.contains("Monday"))
+                                          {
+                                            print("Monday.. ${DateTime.monday}");
+                                          }*/
                                         },
                                         child: Obx(() =>
                                             Container(
                                               margin: EdgeInsets.all(2.w),
                                               decoration: BoxDecoration(
-                                                color: select.selectdayvisible
-                                                    .value[index] ? color
-                                                    .primarycolor.withOpacity(
-                                                    0.5) : Colors.white,
-                                                borderRadius: BorderRadius
-                                                    .circular(8),
+                                                color: select.selectdayvisible.value[index] ? color.primarycolor.withOpacity(0.5) : Colors.white,
+                                                borderRadius: BorderRadius.circular(8),
                                                 border: Border.all(
                                                   // color: select.selectdayvisible.value[index]?color.primarycolor:Colors.black,
                                                   color: color.primarycolor,
@@ -1625,7 +1838,6 @@ class _Subscription_pageState extends State<Subscription_page> {
                                             )),
                                       );
                                     },)
-
                                 ],
                               ),
                             )),
@@ -1824,9 +2036,182 @@ class _Subscription_pageState extends State<Subscription_page> {
                                     ))
                               ],
                             ))),
-                        SizedBox(
-                          height: 10.h,
-                        ),
+                       // SizedBox(height: 10.h,),
+                       //  Obx(() =>
+                       //    select.selectdayvisible.value.contains(true) ?
+                       //  /*  Dialog(
+                       //      child: Container(color: Colors.white,
+                       //        height: 38.h,margin: EdgeInsets.only(bottom: 5.h),
+                       //        child: SfDateRangePicker(
+                       //          confirmText: "Done",
+                       //          // onSubmit: (p0) {
+                       //          //   print("ans=$p0");
+                       //          //   Navigator.pop(context);
+                       //          // },
+                       //          // onCancel: () {
+                       //          //   Navigator.pop(context);
+                       //          // },
+                       //          // showActionButtons: true,
+                       //          initialSelectedDate: DateTime.now().add(Duration(days: 1)),
+                       //          view: DateRangePickerView.month,
+                       //          selectionMode: DateRangePickerSelectionMode.multiple,
+                       //          controller: _datePickerController,
+                       //          enablePastDates: false,
+                       //          todayHighlightColor: color.primarycolor,
+                       //          selectionColor: color.primarycolor,
+                       //          minDate: select.tom_date.value,
+                       //          maxDate: select.tom_date.value.add(Duration(
+                       //              days: select.remaindaysinmonth.value + select.nextdaysinmonth.value)),
+                       //          selectableDayPredicate: (date) {
+                       //           if(selectedDays.contains(date.weekday)){
+                       //             return true;
+                       //           }
+                       //           return false;
+                       //          },
+                       //          onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                       //            print("month====${dateRangePickerSelectionChangedArgs.value}");
+                       //            List<DateTime> list = dateRangePickerSelectionChangedArgs.value;
+                       //            print("month====${list.length}");
+                       //            list.forEach((element) {
+                       //              DateTime d = element;
+                       //              // DateTime d=list.last;
+                       //              print("D: $d");
+                       //              int days = DateUtils.getDaysInMonth(d.year, d.month);
+                       //              print("totaldays=$days");
+                       //              DateTime lastdate = DateTime.utc(d.year, d.month + 1).subtract(Duration(days: 1));
+                       //              print(lastdate);
+                       //              int t = d.day;
+                       //              print("current date=${d.day}");
+                       //              print("odd=${t % 2 == 0}");
+                       //
+                       //                for (int i = t; i <= days; i = i + 1) {
+                       //                  if (!select.alter_dateTime.contains(DateTime(d.year, d.month, i))) {
+                       //                    select.alter_dateTime.value.add(DateTime(d.year, d.month, i));
+                       //                    print("i===${DateTime(d.year, d.month, i)}");
+                       //                  }
+                       //                  else {
+                       //                    break;
+                       //                  }
+                       //              }
+                       //            });
+                       //            selectedDays = dateRangePickerSelectionChangedArgs.value;
+                       //
+                       //            _datePickerController.selectedDates = select.alter_dateTime.value;
+                       //            if (select.alter_dateTime.value.length != 0) {
+                       //              select.alter_dateTime.value.forEach((element) {
+                       //                if (!select.temp_dateTime.contains("${element.day}-${element.month}-${element.year}")) {
+                       //                  select.temp_dateTime.add("${element.day}-${element.month}-${element.year}");
+                       //                }
+                       //              });
+                       //              select.temp_dateTime.refresh();
+                       //            }
+                       //
+                       //            print("temp=${select.temp_dateTime.value}");
+                       //            select.alter_dateTime.refresh();
+                       //            select.date.value = select.temp_dateTime.value.first;
+                       //            select.enddate.value = select.temp_dateTime.value.last;
+                       //
+                       //            // t=select.alter_dateTime.value.length;
+                       //            print("t===${_datePickerController.selectedDates}");
+                       //            Future.delayed(Duration(seconds: 1)).then((value) {
+                       //              if (t == 0) {
+                       //                t = 1;
+                       //                Navigator.of(context).pop();
+                       //              }
+                       //            });
+                       //          },
+                       //        )
+                       //    ),
+                       //  ) */
+                       //    Row(
+                       //        children: [
+                       //          Expanded(
+                       //            child: Padding(
+                       //              padding: const EdgeInsets.all(8.0),
+                       //              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                       //                children: [
+                       //                  Text("Start From",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                       //                  Container(
+                       //                    height: 50,
+                       //                    width: double.infinity,
+                       //                    margin: EdgeInsets.symmetric(vertical: 5),
+                       //                    padding: EdgeInsets.all(5),
+                       //                    decoration: BoxDecoration(
+                       //                      color: Colors.grey.shade300,
+                       //                      borderRadius: BorderRadius.circular(10)
+                       //                    ),
+                       //                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       //                      children: [
+                       //                        Obx(() =>
+                       //                            Text(" ${select.startDate.value}",style: TextStyle(fontWeight: FontWeight.w400),)),
+                       //                        IconButton(onPressed: () {
+                       //                          _selectDate(context);
+                       //                        }, icon: Icon(Icons.calendar_month,color: color.primarycolor,))
+                       //                      ],
+                       //                    )
+                       //                    /*TextField(
+                       //                      controller: _startDateController,
+                       //                      readOnly: true,
+                       //                      onTap: () {
+                       //                        _selectDate(context,0);
+                       //                      },
+                       //                      decoration: InputDecoration(
+                       //                        // labelText: 'Start From',
+                       //                        border: InputBorder.none,
+                       //                        hintText: "Start From",
+                       //                        suffixIcon: Icon(Icons.calendar_today,color: color.primarycolor,),
+                       //                      ),
+                       //                    )*/,
+                       //                  ),
+                       //                ],
+                       //              ),
+                       //            ),
+                       //          ),
+                       //          Expanded(
+                       //            child: Padding(
+                       //              padding: const EdgeInsets.all(8.0),
+                       //              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                       //                children: [
+                       //                  Text("To Date",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
+                       //                  Container(
+                       //                    height: 50,
+                       //                    width: double.infinity,
+                       //                    margin: EdgeInsets.symmetric(vertical: 5),padding: EdgeInsets.all(5),
+                       //                    decoration: BoxDecoration(
+                       //                        color: Colors.grey.shade300,
+                       //                        borderRadius: BorderRadius.circular(10)
+                       //                    ),
+                       //                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       //                      children: [
+                       //                        Obx(() =>
+                       //                            Text(" ${select.endDate.value}",style: TextStyle(fontWeight: FontWeight.w400),)),
+                       //                        IconButton(onPressed: () {
+                       //                          _selectDate1(context);
+                       //                        }, icon: Icon(Icons.calendar_month,color: color.primarycolor,))
+                       //                      ],
+                       //                    )
+                       //                    /*TextField(
+                       //                      controller: _endDateController,
+                       //                      readOnly: true,
+                       //                      onTap: () {
+                       //                        _selectDate(context,1);
+                       //                      },
+                       //                      decoration: InputDecoration(
+                       //                        // labelText: 'End To',
+                       //                        border: InputBorder.none,
+                       //                        hintText: 'End To',
+                       //                        suffixIcon: Icon(Icons.calendar_today,color: color.primarycolor,),
+                       //                      ),
+                       //                    ),*/
+                       //                  ),
+                       //                ],
+                       //              ),
+                       //            ),
+                       //          ),
+                       //        ],
+                       //      )
+                       //    : SizedBox(),
+                       //  )
                       ],
                     ),
                   ),
@@ -1990,4 +2375,196 @@ class _Subscription_pageState extends State<Subscription_page> {
 
     });
   }
+
+  Future<void> _selectDate(BuildContext context) async {
+    /*final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );*/
+    showDialog(context: context,
+      builder: (context) =>
+          Dialog(
+            child: Container(color: Colors.white,
+                height: 50.h,
+                child: SfDateRangePicker(
+                  initialSelectedDate: DateTime.now().add(Duration(days: 1)),
+                  view: DateRangePickerView.month,
+                  selectionMode: DateRangePickerSelectionMode.single,
+                  controller: _datePickerController,
+                  enablePastDates: false,
+                  selectionColor: color.primarycolor,
+                  todayHighlightColor: color.primarycolor,
+                  minDate: select.tom_date.value,
+                  maxDate: select.tom_date.value.add(Duration(
+                      days: select.remaindaysinmonth.value + select.nextdaysinmonth.value)),
+                  onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                    print("${dateRangePickerSelectionChangedArgs.value}");
+                    DateTime selectdate = dateRangePickerSelectionChangedArgs.value;
+                    select.startDate.value = "${selectdate.day}-${selectdate.month}-${selectdate.year}";
+
+                    Navigator.pop(context);
+                  },
+                  showActionButtons: true,
+                  onSubmit: (p0) {
+                    print(p0);
+                    DateTime selectdate = p0 as DateTime;
+                    select.startDate.value = "${selectdate.day}-${selectdate.month}-${selectdate.year}";
+
+                    Navigator.pop(context);
+                  },
+                  onCancel: () {
+                    Navigator.pop(context);
+                  },
+
+                )),
+          ),);
+
+    /*if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        _startDateController.text = _selectedDate.toString().substring(0,10);
+      });
+    }*/
+
+  }
+  Future<void> _selectDate1(BuildContext context) async {
+    /*final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );*/
+    showDialog(context: context,
+      builder: (context) =>
+          Dialog(
+            child: Container(color: Colors.white,
+                height: 50.h,
+                child: SfDateRangePicker(
+                  initialSelectedDate: DateTime.now().add(Duration(days: 1)),
+                  view: DateRangePickerView.month,
+                  selectionMode: DateRangePickerSelectionMode.single,
+                  controller: _datePickerController,
+                  enablePastDates: false,
+                  selectionColor: color.primarycolor,
+                  todayHighlightColor: color.primarycolor,
+                  minDate: select.tom_date.value,
+                  maxDate: select.tom_date.value.add(Duration(
+                      days: select.remaindaysinmonth.value + select.nextdaysinmonth.value)),
+                  onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                    print("${dateRangePickerSelectionChangedArgs.value}");
+                    DateTime selectdate = dateRangePickerSelectionChangedArgs.value;
+                    select.endDate.value = "${selectdate.day}-${selectdate.month}-${selectdate.year}";
+
+                    Navigator.pop(context);
+                  },
+                  showActionButtons: true,
+                  onSubmit: (p0) {
+                    print(p0);
+                    DateTime selectdate = p0 as DateTime;
+                    select.endDate.value= "${selectdate.day}-${selectdate.month}-${selectdate.year}";
+
+                    Navigator.pop(context);
+                  },
+                  onCancel: () {
+                    Navigator.pop(context);
+                  },
+                )),
+          ),);
+
+
+  }
+
+  void _toggleSelectedDay(int day) {
+    setState(() {
+      if (selectedDays.contains(day)) {
+        selectedDays.remove(day);
+      } else {
+        selectedDays.add(day);
+      }
+    });
+  }
 }
+/*Dialog(
+                                child: Container(
+                                    height: 38.h,margin: EdgeInsets.only(bottom: 6.h),
+                                    child: SfDateRangePicker(
+                                      confirmText: "Done",
+                                      onSubmit: (p0) {
+                                        print("ans=$p0");
+                                        List<PickerDateRange> p = p0 as List<PickerDateRange>;
+                                        if (p.length == 1) {
+                                          select.date.value =
+                                          "${p[0].startDate!.day}-${p[0].startDate!.month}-${p[0].startDate!.year}";
+                                          select.enddate.value =
+                                          "${p[0].endDate!.day}-${p[0].endDate!.month}-${p[0].endDate!.year}";
+                                        }
+                                        else {
+                                          select.date.value =
+                                          "${p[0].startDate!.day}-${p[0].startDate!.month}-${p[0].startDate!.year}";
+                                          select.enddate.value =
+                                          "${p[p.length - 1].endDate!.day}-${p[p.length - 1].endDate!.month}-${p[p
+                                              .length - 1].endDate!.year}";
+                                        }
+                                        Navigator.pop(context);
+                                      },
+                                      onCancel: () {Navigator.pop(context);},
+
+                                      showActionButtons: true,
+                                      initialSelectedDate: DateTime.now().add(Duration(days: 6)),
+                                      view: DateRangePickerView.month,
+                                      selectionMode: DateRangePickerSelectionMode.multiRange,
+                                      selectionTextStyle: TextStyle(color: color.primarycolor),
+                                      selectionColor: color.primarycolor,
+                                      rangeSelectionColor: color.primarycolor.withOpacity(0.5),
+                                      startRangeSelectionColor: color.primarycolor.withOpacity(0.5),
+                                      endRangeSelectionColor: color.primarycolor.withOpacity(0.5),
+                                      todayHighlightColor: color.primarycolor,
+                                      controller: _datePickerController,
+                                      enablePastDates: false,
+                                      minDate: select.tom_date.value,
+                                      maxDate: select.tom_date.value.add(Duration(
+                                          days: select.remaindaysinmonth.value + select.nextdaysinmonth.value)),
+                                      onSelectionChanged: (
+                                          dateRangePickerSelectionChangedArgs) {
+                                        List<PickerDateRange> list = dateRangePickerSelectionChangedArgs.value;
+                                        list.forEach((element) {
+                                          print("month=${element.startDate!.month}");
+                                          if (!select.monthlist.value.contains(element.startDate!.month)) {
+                                            select.monthlist.value.add(element.startDate!.month);
+                                            if (element.startDate!.month == select.tom_date.value.month) {
+                                              int days = DateUtils.getDaysInMonth(
+                                                  element.startDate!.year,
+                                                  element.startDate!.month);
+                                              PickerDateRange pick = PickerDateRange(
+                                                  DateTime(
+                                                      element.startDate!.year,
+                                                      element.startDate!.month,
+                                                      select.tom_date.value.day),
+                                                  DateTime(
+                                                      element.startDate!.year,
+                                                      element.startDate!.month, 1).add(Duration(days: days - 1)));
+                                              select.daterange.value.add(pick);
+                                            }
+                                            else {
+                                              int days = DateUtils.getDaysInMonth(
+                                                  element.startDate!.year,
+                                                  element.startDate!.month);
+                                              PickerDateRange pick = PickerDateRange(
+                                                  DateTime(
+                                                      element.startDate!.year,
+                                                      element.startDate!.month,
+                                                      1),
+                                                  DateTime(
+                                                      element.startDate!.year,
+                                                      element.startDate!.month, 1).add(Duration(days: days - 1)));
+                                              select.daterange.value.add(pick);
+                                            }
+                                            print("month=${select.daterange.value}");
+                                          }
+                                        });
+                                        _datePickerController.selectedRanges = select.daterange.value;
+                                      },
+                                    )),
+                              )*/
